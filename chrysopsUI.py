@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'chrysops.ui'
 #
-# Created: Fri Jun 20 16:50:45 2014
+# Created: Fri Jun 20 17:24:22 2014
 #      by: PyQt4 UI code generator 4.9.5
 #
 # WARNING! All changes made in this file will be lost!

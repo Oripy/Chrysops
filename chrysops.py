@@ -9,7 +9,6 @@ from PyQt4 import QtCore, QtGui
 
 from chrysopsUI import Ui_MainWindow 
 
-import os
 import print_prescription
 import database
 
@@ -38,7 +37,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.dateEdit.setDate(QtCore.QDate.currentDate())
         self.printButton.clicked.connect(self.printAction)
         self.searchButton.clicked.connect(self.searchAction)
-        self.clearButton.clicked.connect(self.clearAction)
+        self.clearButton.clicked.connect(self.clearAction)  
+        
 #        # List actions and create the menubar
 #        self.exitAction.triggered.connect(QtGui.qApp.quit)
 #        self.saveAction.triggered.connect(self.save)
@@ -138,7 +138,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 #            event.ignore()
 
     def printAction(self):
-        self.print_window = print_prescription.MainWindow(output="pdf",
+        self.print_window = print_prescription.MainWindow(output="print",
                 values=self.getData())
         self.print_window.pagePrinted.connect(self.saveAction)
     

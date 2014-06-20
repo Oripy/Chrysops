@@ -5,9 +5,10 @@ Created on Fri Feb 7 16:17:00 2014
 @author: pmaurier
 """
 
+import sys
+    
 from PyQt4 import QtGui, QtWebKit, QtCore
 from string import Template
-from datetime import date
 
 class MainWindow(QtGui.QMainWindow):
     
@@ -191,7 +192,6 @@ class MainWindow(QtGui.QMainWindow):
 #web.loadFinished.connect(printIt)
 
 if __name__ == '__main__':
-    import sys
     app = QtGui.QApplication(sys.argv)
     mainWin = MainWindow()
     sys.exit(app.exec_())
