@@ -6,7 +6,6 @@ Created on Fri Oct 11 15:05:31 2013
 """
 
 import ConfigParser
-import os
 
 CONFIG = ConfigParser.ConfigParser()
 CONFIG.read('config.ini')

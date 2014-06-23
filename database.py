@@ -39,6 +39,7 @@ DATA_STRUCTURE = [
     ]
 
 class MainWindow(QtGui.QMainWindow):
+    # Signal returning the selected line
     resultSelected = QtCore.pyqtSignal(list)
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -61,12 +62,14 @@ class MainWindow(QtGui.QMainWindow):
 
         toolbar.addWidget(QtGui.QLabel(" Nom : "))
         self.searchNameEdit = QtGui.QLineEdit()
-        self.searchNameEdit.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.searchNameEdit.setSizePolicy(QtGui.QSizePolicy.Fixed, 
+                                          QtGui.QSizePolicy.Fixed)
         toolbar.addWidget(self.searchNameEdit)
 
         toolbar.addWidget(QtGui.QLabel(u" Prénom : "))
         self.searchSurnameEdit = QtGui.QLineEdit()
-        self.searchSurnameEdit.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.searchSurnameEdit.setSizePolicy(QtGui.QSizePolicy.Fixed, 
+                                             QtGui.QSizePolicy.Fixed)
         toolbar.addWidget(self.searchSurnameEdit)
         
         toolbar.addWidget(QtGui.QLabel(u" Date : "))
@@ -78,10 +81,14 @@ class MainWindow(QtGui.QMainWindow):
         self.dateCheckbox = QtGui.QCheckBox('')
         toolbar.addWidget(self.dateCheckbox)
         
+        toolbar.addSeparator()
+        deleteAction = toolbar.addAction(u"Supprimer")
+        
         self.searchNameEdit.textChanged.connect(self.filterTable)
         self.searchSurnameEdit.textChanged.connect(self.filterTable)
         self.searchDateEdit.dateChanged.connect(self.filterTable)
         self.dateCheckbox.stateChanged.connect(self.checkboxaction)
+        deleteAction.triggered.connect(self.deleteSelectedRow)
 
         self.setCentralWidget(self.table)
         self.addToolBar(toolbar)
@@ -105,49 +112,53 @@ class MainWindow(QtGui.QMainWindow):
         for num, elem in enumerate(DATA_STRUCTURE):
             self.model.setHeaderData(num, QtCore.Qt.Horizontal, elem[0])
 
-        # Needed to update the view
-        self.model.select()
-
     def addNewLine(self, data):
+        """ Insert a new row into the database """
         self.model.insertRows(0, 1) 
         
         # Enter values
         for num, elem in enumerate(data):
             self.model.setData(self.model.index(0, num), elem)    
         
-#        # Modify values
-#        self.model.setData(self.model.index(0, 0), self.searchNameEdit.text())
-#        self.model.setData(self.model.index(0, 1), self.searchSurnameEdit.text())
-#        self.model.setData(self.model.index(0, 2), self.searchDateEdit.date())
-        
         # Add data to the model
         self.model.submitAll()
 
     def filterTable(self):
+        """ Filter elements displayed according to edit fields """      
         query_text = ('nom LIKE "'+self.searchNameEdit.text()+'%" AND '
                       'prenom LIKE "'+self.searchSurnameEdit.text()+'%"')
+                      
+        # Add the date filter if dateCheckbox is checked
         if self.dateCheckbox.isChecked():
             query_text += 'AND date = "'+self.searchDateEdit.date().toString('yyyy-MM-dd')+'"'
-            
+        
+        # Apply the filter and sort the view
         self.model.setFilter(query_text)
-        self.model.select()
         self.model.sort(2, QtCore.Qt.AscendingOrder)
-        self.table.setModel(self.model)
 
     def checkboxaction(self):
+        """ Enable or disable date edit field according to checkbox state """
         self.searchDateEdit.setEnabled(self.dateCheckbox.isChecked())
         self.filterTable()
     
     def deleteSelectedRow(self):
-        self.model.removeRow(self.table.selectionModel().selectedRows()[0].row()) 
-        self.model.submitAll()
+        """ Remove selected row after a user warning"""
+        if len(self.table.selectionModel().selectedRows())>0:
+            question = QtGui.QMessageBox.warning(self,
+                u'Supprimer la ligne sélectionnée ?',
+                u'Voulez-vous vraiment supprimer la ligne sélectionnée ?',
+                QtGui.QMessageBox.Yes,
+                QtGui.QMessageBox.No)
+            if question == QtGui.QMessageBox.Yes:
+                self.model.removeRow(self.table.selectionModel().selectedRows()[0].row()) 
+                self.model.submitAll()
 
     def returnRow(self):
+        """ Return the row selected and hide the search window """
         self.hide()
         if (not self.signalsBlocked()):
-            self.resultSelected.emit([item.data().toString() for item in self.table.selectionModel().selectedIndexes()])
-
-#db.close()
+            self.resultSelected.emit([item.data().toString() for item 
+                in self.table.selectionModel().selectedIndexes()])
 
 if __name__ == '__main__':
     import sys
