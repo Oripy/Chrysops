@@ -172,7 +172,7 @@ class MainWindow(QtGui.QMainWindow):
                            remarque = self.values['remarque'],
                            amblyopie = self.values['amblyopie'],
                            avcorrigee = self.values['avcorrigee'],
-                           remarques = self.values['remarques'])
+                           remarques = self.values['remarques'].replace("\n", "<br />"))
         return data
        
     def preview(self):
