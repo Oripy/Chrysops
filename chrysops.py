@@ -116,7 +116,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def printAction(self):
         """ Send form data to the preview window and display it """
         self.print_window = print_prescription.MainWindow(output="print",
-                values=self.getData())
+                values=self.data)
         
         # Save data if the signal says that the page have been printed
         self.print_window.pagePrinted.connect(self.saveAction)
@@ -127,11 +127,11 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     
     def saveAction(self):
         """ Add a new line to the database with data from the current form """
-        self.search_window.addNewLine(self.getData())
+        self.search_window.addNewLine(self.data)
     
     def clearAction(self):
         """ Reset the form """
-        self.loadValues([item[2] for item in database.DATA_STRUCTURE])
+        self.data = [item[2] for item in database.DATA_STRUCTURE]
 
     def getData(self):
         """ Returns all form data """
@@ -204,6 +204,12 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.amblyopiaLeftEye.setChecked(str2bool(data[25]))
         
         self.remarksEdit.setPlainText(str(data[26]))
+        
+        self.visualAcuityGroupChanged()
+        self.amblyopiaGroupChanged()
+        self.prismGroupChanged()
+    
+    data = property(getData, loadValues)
 
     def setUse(self, value=0):
         """ Change glasses usage radio selection according to given value
@@ -381,6 +387,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         else:
             self.amblyopiaGroup.setChecked(False)
             self.functionnalRadio.setChecked(True)
+        self.amblyopiaGroupChanged()
 
     def getAmblyopia(self):
         """ Returns amblyopia radio selection
