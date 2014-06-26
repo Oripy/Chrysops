@@ -12,10 +12,12 @@ from chrysopsUI import Ui_MainWindow
 import print_prescription
 import database
 
-from config import *
-from formatting import *
+from config import (MAX_SPHERE, MIN_SPHERE, STEP_SPHERE, DEFAULT_SPHERE,
+                    MAX_CYL, MIN_CYL, STEP_CYL, DEFAULT_CYL,
+                    MAX_AXIS, MIN_AXIS, STEP_AXIS, DEFAULT_AXIS,
+                    MAX_ADD, MIN_ADD, STEP_ADD, DEFAULT_ADD)
 
-def str2bool(v):
+def str2bool(value):
     """ Convert a string value to boolean 
         True is returned for (case insensitive):
             yes
@@ -23,7 +25,7 @@ def str2bool(v):
             t
             1
     """
-    return str(v).lower() in ("yes", "true", "t", "1")
+    return str(value).lower() in ("yes", "true", "t", "1")
 
 class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -59,7 +61,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.rCylSpin.valueChanged.connect(self.modified)
         
         self.rLabelCylPos.setVisible(False)
-        self.rLabelCylPos.setPalette(RED_PALETTE)
         
         self.rAxisSpin.setMaximum(MAX_AXIS)
         self.rAxisSpin.setMinimum(MIN_AXIS)
@@ -91,7 +92,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.lCylSpin.valueChanged.connect(self.modified)
         
         self.lLabelCylPos.setVisible(False)
-        self.lLabelCylPos.setPalette(RED_PALETTE)
         
         self.lAxisSpin.setMaximum(MAX_AXIS)
         self.lAxisSpin.setMinimum(MIN_AXIS)
@@ -131,9 +131,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     
     def clearAction(self):
         """ Reset the form """
-        self.loadValues(["","",QtCore.QDate.currentDate(), False, 0, 0, 0, False,
-                         0, 0, 180, 0, 0, 0, 0, 0, 180, 0, 0, 0, False, 0, 0, 0,
-                         False, False, ""])
+        self.loadValues(["", "", QtCore.QDate.currentDate(), False, 0, 0, 0,
+                         False, 0, 0, 180, 0, 0, 0, 0, 0, 180, 0, 0, 0, False,
+                         0, 0, 0, False, False, ""])
 
     def getData(self):
         """ Returns all form data """
@@ -170,7 +170,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         """ Change form values to given data """
         self.nameEdit.setText(str(data[0]))
         self.surnameEdit.setText(str(data[1]))
-        self.dateEdit.setDate(QtCore.QDate.fromString(str(data[2]), "yyyy-MM-dd"))
+        self.dateEdit.setDate(QtCore.QDate.fromString(str(data[2]),
+                                                      "yyyy-MM-dd"))
         self.CMUCheckBox.setChecked(str2bool(data[3]))
         self.setUse(int(data[4]))
         self.setGlasses(int(data[5]))

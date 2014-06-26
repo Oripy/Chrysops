@@ -13,9 +13,10 @@ from string import Template
 class MainWindow(QtGui.QMainWindow):
     # Signal saying that the page have been printed
     pagePrinted = QtCore.pyqtSignal()
-    def __init__(self, values=["","",QtCore.QDate.currentDate(), False, 0, 0, 0, False,
-                         0, 0, 180, 0, 0, 0, 0, 0, 180, 0, 0, 0, False, 0, 0, 0,
-                         False, False, ""], output="pdf"):
+    def __init__(self, values=["", "", QtCore.QDate.currentDate(), False, 0, 0,
+                               0, False, 0, 0, 180, 0, 0, 0, 0, 0, 180, 0, 0,
+                               0, False, 0, 0, 0, False, False, ""],
+                               output="pdf"):
         super(MainWindow, self).__init__()
 
         # Zoom parameters
@@ -104,19 +105,26 @@ class MainWindow(QtGui.QMainWindow):
             remarque = u""       
         
         self.values = dict(datePrescription = values[2].toString('dd/MM/yyyy'),
-                    prenom = str(values[1]), nom = str(values[0]), cmu = (u"CMU" if values[3] else ''),
-                    port = port, verres = verres,
-                    teinte = teinte, reflets = (u"antireflets" if values[7] else ''),
-                    odsphere = values[8], odcylindre = values[9], odaxe = str(values[10])+u"°",
-                    odaddition = values[11], odprisme = odprisme, ogsphere = values[14],
-                    ogcylindre = values[15], ogaxe = str(values[16])+u"°", ogaddition = values[17],
-                    ogprisme = ogprisme, remarque = remarque, amblyopie = amblyopie,
+                    prenom = str(values[1]), nom = str(values[0]),
+                    cmu = (u"CMU" if values[3] else ''), port = port,
+                    verres = verres,
+                    teinte = teinte,
+                    reflets = (u"antireflets" if values[7] else ''),
+                    odsphere = values[8], odcylindre = values[9],
+                    odaxe = str(values[10])+u"°", odaddition = values[11],
+                    odprisme = odprisme, ogsphere = values[14],
+                    ogcylindre = values[15], ogaxe = str(values[16])+u"°",
+                    ogaddition = values[17], ogprisme = ogprisme,
+                    remarque = remarque, amblyopie = amblyopie,
                     avcorrigee = avcorrigee, remarques = values[26])
 
         self.web = QtWebKit.QWebView()
         self.web.settings().setDefaultTextEncoding("utf-8")
-        self.web.setFixedSize(int(1000*self.zoomValue), int(1500*self.zoomValue))
-        self.web.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.web.setFixedSize(int(1000*self.zoomValue),
+                              int(1500*self.zoomValue))
+        self.web.setSizePolicy(QtGui.QSizePolicy.Fixed,
+                               QtGui.QSizePolicy.Fixed)
+        self.setFixedSize(int(1000*self.zoomValue), int(1500*self.zoomValue))
 
         toolbar = QtGui.QToolBar()
         printAction = toolbar.addAction("Imprimer")
@@ -140,7 +148,8 @@ class MainWindow(QtGui.QMainWindow):
         inputTemplate = 'template.htm'
         try:
             with open(inputTemplate) as inputFileHandle:
-                self.page = Template(unicode(inputFileHandle.read(), encoding='utf-8'))
+                self.page = Template(unicode(inputFileHandle.read(),
+                                             encoding='utf-8'))
         
         except IOError:
             sys.stderr.write("Error: Could not open %s\n" % (inputTemplate))
@@ -149,8 +158,9 @@ class MainWindow(QtGui.QMainWindow):
         self.preview()
 
     def loadValues(self):
-        # loading dynamic values
-        data = self.page.substitute(datePrescription = self.values['datePrescription'],
+        """ loading dynamic values """
+        data = self.page.substitute(
+                           datePrescription = self.values['datePrescription'],
                            prenom = self.values['prenom'].capitalize(),
                            nom = self.values['nom'].upper(),
                            cmu = self.values['cmu'],
@@ -171,17 +181,20 @@ class MainWindow(QtGui.QMainWindow):
                            remarque = self.values['remarque'],
                            amblyopie = self.values['amblyopie'],
                            avcorrigee = self.values['avcorrigee'],
-                           remarques = self.values['remarques'].replace("\n", "<br />"))
+                           remarques = self.values['remarques'].replace("\n",
+                                                                     "<br />"))
         return data
        
     def preview(self):
-        # Display preview window
+        """ Display preview window """
         self.web.setHtml(self.loadValues())
         self.web.setZoomFactor(self.zoomValue)
         
         self.show()
         
     def printIt(self):
+        """ Print the page to the printer, close the preview window and
+            send the signal that the page is printed """
         self.web.setZoomFactor(1)
         self.web.print_(self.printer)
         if (not self.signalsBlocked()):

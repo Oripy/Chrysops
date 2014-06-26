@@ -130,7 +130,8 @@ class MainWindow(QtGui.QMainWindow):
                       
         # Add the date filter if dateCheckbox is checked
         if self.dateCheckbox.isChecked():
-            query_text += 'AND date = "'+self.searchDateEdit.date().toString('yyyy-MM-dd')+'"'
+            query_text += ('AND date = "'+
+                        self.searchDateEdit.date().toString('yyyy-MM-dd')+'"')
         
         # Apply the filter and sort the view
         self.model.setFilter(query_text)
@@ -150,7 +151,8 @@ class MainWindow(QtGui.QMainWindow):
                 QtGui.QMessageBox.Yes,
                 QtGui.QMessageBox.No)
             if question == QtGui.QMessageBox.Yes:
-                self.model.removeRow(self.table.selectionModel().selectedRows()[0].row()) 
+                self.model.removeRow(
+                        self.table.selectionModel().selectedRows()[0].row()) 
                 self.model.submitAll()
 
     def returnRow(self):
