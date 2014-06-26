@@ -10,12 +10,12 @@ import sys
 from PyQt4 import QtGui, QtWebKit, QtCore
 from string import Template
 
+from database import DATA_STRUCTURE
+
 class MainWindow(QtGui.QMainWindow):
     # Signal saying that the page have been printed
     pagePrinted = QtCore.pyqtSignal()
-    def __init__(self, values=["", "", QtCore.QDate.currentDate(), False, 0, 0,
-                               0, False, 0, 0, 180, 0, 0, 0, 0, 0, 180, 0, 0,
-                               0, False, 0, 0, 0, False, False, ""],
+    def __init__(self, values=[item[2] for item in DATA_STRUCTURE],
                                output="pdf"):
         super(MainWindow, self).__init__()
 

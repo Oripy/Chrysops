@@ -131,9 +131,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     
     def clearAction(self):
         """ Reset the form """
-        self.loadValues(["", "", QtCore.QDate.currentDate(), False, 0, 0, 0,
-                         False, 0, 0, 180, 0, 0, 0, 0, 0, 180, 0, 0, 0, False,
-                         0, 0, 0, False, False, ""])
+        self.loadValues([item[2] for item in database.DATA_STRUCTURE])
 
     def getData(self):
         """ Returns all form data """
