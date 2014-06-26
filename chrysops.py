@@ -139,26 +139,26 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.surnameEdit.text(),
                 self.dateEdit.date(),
                 self.CMUCheckBox.isChecked(),
-                self.getUse(),
-                self.getGlasses(),
-                self.getTint(),
+                self.use,
+                self.glasses,
+                self.tint,
                 self.antiglareCheckBox.isChecked(),
                 self.rSphereSpin.value(),
                 self.rCylSpin.value(),
                 self.rAxisSpin.value(),
                 self.rAddSpin.value(),
                 self.rPrismValue.value(),
-                self.getRBase(),
+                self.rBase,
                 self.lSphereSpin.value(),
                 self.lCylSpin.value(),
                 self.lAxisSpin.value(),
                 self.lAddSpin.value(),
                 self.lPrismValue.value(),
-                self.getLBase(),
+                self.lBase,
                 self.visualAcuityGroup.isChecked(),
                 self.rVASpin.value(),
                 self.lVASpin.value(),
-                self.getAmblyopia(),
+                self.amblyopia,
                 self.amblyopiaRightEye.isChecked(),
                 self.amblyopiaLeftEye.isChecked(),
                 self.remarksEdit.toPlainText().toLatin1()
@@ -171,9 +171,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.dateEdit.setDate(QtCore.QDate.fromString(str(data[2]),
                                                       "yyyy-MM-dd"))
         self.CMUCheckBox.setChecked(str2bool(data[3]))
-        self.setUse(int(data[4]))
-        self.setGlasses(int(data[5]))
-        self.setTint(int(data[6]))
+        self.use = int(data[4])
+        self.glasses = int(data[5])
+        self.tint = int(data[6])
         self.antiglareCheckBox.setChecked(str2bool(data[7]))
         
         self.rSphereSpin.setValue(float(data[8]))
@@ -182,7 +182,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.rAddSpin.setValue(float(data[11]))
         self.rPrismGroup.setChecked(float(data[12]) != 0)
         self.rPrismValue.setValue(float(data[12]))
-        self.setRBase(int(data[13]))
+        self.rBase = int(data[13])
         
         self.lSphereSpin.setValue(float(data[14]))
         self.lCylSpin.setValue(float(data[15]))
@@ -190,7 +190,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.lAddSpin.setValue(float(data[17]))
         self.lPrismGroup.setChecked(float(data[18]) != 0)
         self.lPrismValue.setValue(float(data[18]))
-        self.setLBase(int(data[19]))
+        self.lBase = int(data[19])
         
         if float(data[11]) == float(data[17]):
             self.rLinkCheckbox.setChecked(True)
@@ -199,7 +199,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.rVASpin.setValue(int(data[21]))
         self.lVASpin.setValue(int(data[22]))
         
-        self.setAmblyopia(int(data[23]))
+        self.amblyopia = int(data[23])
         self.amblyopiaRightEye.setChecked(str2bool(data[24]))
         self.amblyopiaLeftEye.setChecked(str2bool(data[25]))
         
@@ -227,7 +227,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         elif self.bothUseRadio.isChecked():
             return 2
         else:
-            return 0            
+            return 0
+
+    use = property(getUse, setUse)
 
     def setGlasses(self, value=0):
         """ Change glasses type radio selection according to given value
@@ -252,6 +254,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             return 2
         else:
             return 0
+        
+    glasses = property(getGlasses, setGlasses)
             
     def setTint(self, value=0):
         """ Change tint radio selection according to given value
@@ -297,6 +301,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         else:
             return 5
 
+    tint = property(getTint, setTint)
+
     def setRBase(self, value=0):
         """ Change right base radio selection according to given value
         0 (default): Inferior
@@ -326,6 +332,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             return 2
         else:
             return 3
+    
+    rBase = property(getRBase, setRBase)
 
     def setLBase(self, value=0):
         """ Change left base radio selection according to given value
@@ -357,6 +365,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         else:
             return 3
             
+    lBase = property(getLBase, setLBase)
+            
     def setAmblyopia(self, value=0):
         """ Change amblyopia radio selection according to given value
         0 (default): no amblyopia set
@@ -383,6 +393,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             return 1
         elif self.organicRadio.isChecked():
             return 2
+    
+    amblyopia = property(getAmblyopia, setAmblyopia)
 
     def additionChanged(self):
         """ Change the other addition value if link is checked """
