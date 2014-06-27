@@ -17,9 +17,8 @@ class MainWindow(QtGui.QMainWindow):
     pagePrinted = QtCore.pyqtSignal()
     def __init__(self, values=[item[2] for item in DATA_STRUCTURE]):
         super(MainWindow, self).__init__()
-
-        # Zoom parameters
-        self.zoomValue = .7
+        
+        DEFAULT_ZOOM = .8
         
         if values[4] == 2:
             port = u"Intermittent ou Permanent"
@@ -117,13 +116,31 @@ class MainWindow(QtGui.QMainWindow):
                     remarque = remarque, amblyopie = amblyopie,
                     avcorrigee = avcorrigee, remarques = values[26])
 
+        # Define the Web view size and behaviour
         self.web = QtWebKit.QWebView()
         self.web.settings().setDefaultTextEncoding("utf-8")
-        self.web.setFixedSize(int(1000*self.zoomValue),
-                              int(1500*self.zoomValue))
         self.web.setSizePolicy(QtGui.QSizePolicy.Fixed,
                                QtGui.QSizePolicy.Fixed)
-        self.setFixedSize(int(1000*self.zoomValue), int(1500*self.zoomValue))
+        self.web.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Horizontal,
+                    QtCore.Qt.ScrollBarAlwaysOff)
+        self.web.page().mainFrame().setScrollBarPolicy(QtCore.Qt.Vertical,
+                    QtCore.Qt.ScrollBarAlwaysOff)
+        self.web.setDisabled(True) #Allow wheel events to be sent to scrollArea
+
+        scrollArea = QtGui.QScrollArea()
+        scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        scrollArea.setWidget(self.web)
+        scrollArea.setAlignment(QtCore.Qt.AlignHCenter)
+        
+        zoomBar = QtGui.QSlider(QtCore.Qt.Horizontal)
+        zoomBar.setMinimum(50)
+        zoomBar.setMaximum(200)
+        zoomBar.setValue(DEFAULT_ZOOM*100)
+        zoomBar.setFixedWidth(200)
+        zoomBar.setTickPosition(zoomBar.TicksBelow)
+        zoomBar.setTickInterval(10)
+        zoomBar.valueChanged.connect(lambda: self.changeZoom(zoomBar.value()/100.))
 
         toolbar = QtGui.QToolBar()
         printAction = toolbar.addAction("Imprimer")
@@ -132,11 +149,18 @@ class MainWindow(QtGui.QMainWindow):
         printAction.triggered.connect(self.printIt)
         pdfAction.triggered.connect(lambda: self.printIt("pdf"))
         cancelAction.triggered.connect(self.close)
-
+        toolbar.addWidget(zoomBar)
+        
+        # Define the MainWindow Characteristics
         self.setWindowTitle(u'Aperçu avant impression')
-        self.setCentralWidget(self.web)
+        self.setCentralWidget(scrollArea)
         self.addToolBar(toolbar)
         
+        maxScreenHeight = QtGui.QDesktopWidget().availableGeometry().height()
+        windowHeight = min(maxScreenHeight, int(1500*1.1*DEFAULT_ZOOM))
+        windowWidth = int(1000*1.1*DEFAULT_ZOOM)        
+        self.resize(windowWidth, windowHeight)
+       
         self.printer = QtGui.QPrinter()
         self.printer.setPageSize(QtGui.QPrinter.A4)
         self.printer.setPageMargins(0, 0, 0, 0, QtGui.QPrinter.Millimeter)
@@ -152,42 +176,40 @@ class MainWindow(QtGui.QMainWindow):
             sys.stderr.write("Error: Could not open %s\n" % (inputTemplate))
             sys.exit(-1)
         
-        self.preview()
+        self.changeZoom(DEFAULT_ZOOM)
+        self.web.setHtml(self.loadValues())
+        self.show()
+
+    def changeZoom(self, zoomValue):
+        self.web.setFixedSize(int(992*zoomValue), int(1402*zoomValue))
+        self.web.setZoomFactor(zoomValue)
 
     def loadValues(self):
         """ loading dynamic values """
         data = self.page.substitute(
-                           datePrescription = self.values['datePrescription'],
-                           prenom = self.values['prenom'].capitalize(),
-                           nom = self.values['nom'].upper(),
-                           cmu = self.values['cmu'],
-                           port = self.values['port'],
-                           verres = self.values['verres'],
-                           teinte = self.values['teinte'],
-                           reflets = self.values['reflets'],
-                           odsphere = self.values['odsphere'],
-                           odcylindre = self.values['odcylindre'],
-                           odaxe = self.values['odaxe'],
-                           odaddition = self.values['odaddition'],
-                           odprisme = self.values['odprisme'],
-                           ogsphere = self.values['ogsphere'],
-                           ogcylindre = self.values['ogcylindre'],
-                           ogaxe = self.values['ogaxe'],
-                           ogaddition = self.values['ogaddition'],
-                           ogprisme = self.values['ogprisme'],
-                           remarque = self.values['remarque'],
-                           amblyopie = self.values['amblyopie'],
-                           avcorrigee = self.values['avcorrigee'],
-                           remarques = self.values['remarques'].replace("\n",
-                                                                     "<br />"))
-        return data
-       
-    def preview(self):
-        """ Display preview window """
-        self.web.setHtml(self.loadValues())
-        self.web.setZoomFactor(self.zoomValue)
-        
-        self.show()
+               datePrescription = self.values['datePrescription'],
+               prenom = self.values['prenom'].capitalize(),
+               nom = self.values['nom'].upper(),
+               cmu = self.values['cmu'],
+               port = self.values['port'],
+               verres = self.values['verres'],
+               teinte = self.values['teinte'],
+               reflets = self.values['reflets'],
+               odsphere = self.values['odsphere'],
+               odcylindre = self.values['odcylindre'],
+               odaxe = self.values['odaxe'],
+               odaddition = self.values['odaddition'],
+               odprisme = self.values['odprisme'],
+               ogsphere = self.values['ogsphere'],
+               ogcylindre = self.values['ogcylindre'],
+               ogaxe = self.values['ogaxe'],
+               ogaddition = self.values['ogaddition'],
+               ogprisme = self.values['ogprisme'],
+               remarque = self.values['remarque'],
+               amblyopie = self.values['amblyopie'],
+               avcorrigee = self.values['avcorrigee'],
+               remarques = self.values['remarques'].replace("\n", "<br />"))
+        return data        
         
     def printIt(self, output="printer"):
         """ Print the page to the printer, close the preview window and
