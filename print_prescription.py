@@ -131,7 +131,7 @@ class MainWindow(QtGui.QMainWindow):
         scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         scrollArea.setWidget(self.web)
-        scrollArea.setAlignment(QtCore.Qt.AlignHCenter)
+        scrollArea.setAlignment(QtCore.Qt.AlignCenter)
         
         zoomBar = QtGui.QSlider(QtCore.Qt.Horizontal)
         zoomBar.setMinimum(50)
@@ -140,7 +140,8 @@ class MainWindow(QtGui.QMainWindow):
         zoomBar.setFixedWidth(200)
         zoomBar.setTickPosition(zoomBar.TicksBelow)
         zoomBar.setTickInterval(10)
-        zoomBar.valueChanged.connect(lambda: self.changeZoom(zoomBar.value()/100.))
+        zoomBar.valueChanged.connect(lambda: self.changeZoom(
+                                                        zoomBar.value()/100.))
 
         toolbar = QtGui.QToolBar()
         printAction = toolbar.addAction("Imprimer")
@@ -180,7 +181,8 @@ class MainWindow(QtGui.QMainWindow):
         self.web.setHtml(self.loadValues())
         self.show()
 
-    def changeZoom(self, zoomValue):
+    def changeZoom(self, zoomValue=1):
+        """ Modify the size and the zoom of the view to given value """
         self.web.setFixedSize(int(992*zoomValue), int(1402*zoomValue))
         self.web.setZoomFactor(zoomValue)
 
@@ -217,11 +219,11 @@ class MainWindow(QtGui.QMainWindow):
         if output == "pdf":
             self.printer.setOutputFormat(QtGui.QPrinter.PdfFormat)
             self.printer.setOutputFileName(self.values['prenom'].capitalize()+
-                                           "_"+
-                                           self.values['nom'].upper()+
-                                           "_"+
-                                           self.values['datePrescription'].replace("/","-")+
-                                           ".pdf")
+                           "_"+
+                           self.values['nom'].upper()+
+                           "_"+
+                           self.values['datePrescription'].replace("/","-")+
+                           ".pdf")
         self.web.setZoomFactor(1)
         self.web.print_(self.printer)
         if (not self.signalsBlocked()):
