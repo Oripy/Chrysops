@@ -15,8 +15,7 @@ from database import DATA_STRUCTURE
 class MainWindow(QtGui.QMainWindow):
     # Signal saying that the page have been printed
     pagePrinted = QtCore.pyqtSignal()
-    def __init__(self, values=[item[2] for item in DATA_STRUCTURE],
-                               output="pdf"):
+    def __init__(self, values=[item[2] for item in DATA_STRUCTURE]):
         super(MainWindow, self).__init__()
 
         # Zoom parameters
@@ -128,8 +127,10 @@ class MainWindow(QtGui.QMainWindow):
 
         toolbar = QtGui.QToolBar()
         printAction = toolbar.addAction("Imprimer")
+        pdfAction = toolbar.addAction("PDF")
         cancelAction = toolbar.addAction("Annuler")
         printAction.triggered.connect(self.printIt)
+        pdfAction.triggered.connect(lambda: self.printIt("pdf"))
         cancelAction.triggered.connect(self.close)
 
         self.setWindowTitle(u'Aperçu avant impression')
@@ -139,10 +140,6 @@ class MainWindow(QtGui.QMainWindow):
         self.printer = QtGui.QPrinter()
         self.printer.setPageSize(QtGui.QPrinter.A4)
         self.printer.setPageMargins(0, 0, 0, 0, QtGui.QPrinter.Millimeter)
-
-        if output == "pdf":
-            self.printer.setOutputFormat(QtGui.QPrinter.PdfFormat)
-            self.printer.setOutputFileName("test.pdf")
 
         # Loading template file
         inputTemplate = 'template.htm'
@@ -192,9 +189,17 @@ class MainWindow(QtGui.QMainWindow):
         
         self.show()
         
-    def printIt(self):
+    def printIt(self, output="printer"):
         """ Print the page to the printer, close the preview window and
             send the signal that the page is printed """
+        if output == "pdf":
+            self.printer.setOutputFormat(QtGui.QPrinter.PdfFormat)
+            self.printer.setOutputFileName(self.values['prenom'].capitalize()+
+                                           "_"+
+                                           self.values['nom'].upper()+
+                                           "_"+
+                                           self.values['datePrescription'].replace("/","-")+
+                                           ".pdf")
         self.web.setZoomFactor(1)
         self.web.print_(self.printer)
         if (not self.signalsBlocked()):

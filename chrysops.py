@@ -115,8 +115,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def printAction(self):
         """ Send form data to the preview window and display it """
-        self.print_window = print_prescription.MainWindow(output="print",
-                values=self.data)
+        self.print_window = print_prescription.MainWindow(values=self.data)
         
         # Save data if the signal says that the page have been printed
         self.print_window.pagePrinted.connect(self.saveAction)
