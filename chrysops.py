@@ -45,7 +45,11 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.printButton.clicked.connect(self.printAction)
         self.searchButton.clicked.connect(self.searchAction)
         self.clearButton.clicked.connect(self.clearAction)  
-               
+    
+        self.normalGlassesRadio.toggled.connect(self.glassesGroupChanged)
+        self.progressiveGlassesRadio.toggled.connect(self.glassesGroupChanged)
+        self.bifocalGlassesRadio.toggled.connect(self.glassesGroupChanged)
+        
         # Right Eye     
         # Correction
         self.rSphereSpin.setMaximum(MAX_SPHERE)
@@ -112,13 +116,22 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.amblyopiaGroup.toggled.connect(self.amblyopiaGroupChanged)        
         
         self.rLinkCheckbox.setChecked(True)
+        self.glassesGroupChanged()
 
     def printAction(self):
         """ Send form data to the preview window and display it """
-        self.print_window = print_prescription.MainWindow(values=self.data)
-        
-        # Save data if the signal says that the page have been printed
-        self.print_window.pagePrinted.connect(self.saveAction)
+        if ((self.glasses != 0) and (self.rAddSpin.value() ==  0) and
+                (self.lAddSpin.value() ==  0)):
+            QtGui.QMessageBox.warning(self,
+                u'Incohérence',
+                (u"Les verres sélectionnés sont multifocaux mais aucune "+
+                u"addition n'est précisée."),
+                QtGui.QMessageBox.Ok)
+        else:
+            self.print_window = print_prescription.MainWindow(values=self.data)
+            
+            # Save data if the signal says that the page have been printed
+            self.print_window.pagePrinted.connect(self.saveAction)
     
     def searchAction(self):
         """ Show the search window """
@@ -204,6 +217,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.remarksEdit.setPlainText(str(data[26]))
         
+        self.glassesGroupChanged()
         self.visualAcuityGroupChanged()
         self.amblyopiaGroupChanged()
         self.prismGroupChanged()
@@ -402,6 +416,17 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     
     amblyopia = property(getAmblyopia, setAmblyopia)
 
+    def glassesGroupChanged(self):
+        if self.normalGlassesRadio.isChecked():
+            self.rAddSpin.setValue(0)
+            self.lAddSpin.setValue(0)
+            self.rLinkCheckbox.setChecked(True)
+        
+        self.rAddSpin.setDisabled(self.normalGlassesRadio.isChecked())
+        self.lAddSpin.setDisabled(self.normalGlassesRadio.isChecked())
+        self.rLinkCheckbox.setDisabled(self.normalGlassesRadio.isChecked())
+        self.lLinkCheckbox.setDisabled(self.normalGlassesRadio.isChecked())
+    
     def additionChanged(self):
         """ Change the other addition value if link is checked """
         if self.rLinkCheckbox.isChecked():
