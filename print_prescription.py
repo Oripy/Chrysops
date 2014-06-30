@@ -48,7 +48,7 @@ class MainWindow(QtGui.QMainWindow):
             teinte = u"Non teintés"
             
         if values[12] != 0:
-            odprisme = "prisme : +%0.2f" % values[12]
+            odprisme = "prisme : %+0.2f" % values[12]
             if values[13] == 0:
                 odprisme += u" base inférieure<br />"
             elif values[13] == 1:
@@ -61,7 +61,7 @@ class MainWindow(QtGui.QMainWindow):
             odprisme = u""
             
         if values[18] != 0:
-            ogprisme = "prisme : +%0.2f" % values[18]
+            ogprisme = "prisme : %+0.2f" % values[18]
             if values[19] == 0:
                 ogprisme += u" base inférieure<br />"
             elif values[19] == 1:
@@ -109,13 +109,13 @@ class MainWindow(QtGui.QMainWindow):
                     cmu = (u"CMU" if values[3] else ''), port = port,
                     verres = verres,
                     teinte = teinte,
-                    reflets = (u"antireflets" if values[7] else ''),
-                    odsphere = "+%0.2f" % values[8],
+                    reflets = (u", antireflets" if values[7] else ''),
+                    odsphere = "%+0.2f" % values[8],
                     odcylindre = "%0.2f" % values[9],
                     odaxe = u"%03d°" % values[10],
                     odaddition = self.addition(values[11]),
                     odprisme = odprisme,
-                    ogsphere = "+%0.2f" % values[14],
+                    ogsphere = "%+0.2f" % values[14],
                     ogcylindre = "%0.2f" % values[15],
                     ogaxe = u"%03d°" % values[16],
                     ogaddition = self.addition(values[17]),
@@ -191,7 +191,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def addition(self, value):
         if value != 0:
-            return "Add +%0.2f" % value
+            return "Add %+0.2f" % value
         else:
             return ""
 
