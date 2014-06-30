@@ -21,34 +21,34 @@ class MainWindow(QtGui.QMainWindow):
         DEFAULT_ZOOM = .8
         
         if values[4] == 2:
-            port = u"Intermittent ou Permanent"
+            port = u"intermittent ou permanent"
         elif values[4] == 1:
-            port = u"Intermittent"
+            port = u"intermittent"
         else:
-            port = u"Permanent"
+            port = u"permanent"
         
         if values[5] == 2:
             verres = u"Bifocaux"
         elif values[5] == 1:
-            verres = u"Foyers progressif"
+            verres = u"Foyers progressifs"
         else:
             verres = u"Unifocaux"
         
         if values[6] == 5:
             teinte = u"Photochromiques"
         elif values[6] == 1:
-            teinte = u"teinte T1"
+            teinte = u"Teinte T1"
         elif values[6] == 2:
-            teinte = u"teinte T2"
+            teinte = u"Teinte T2"
         elif values[6] == 3:
-            teinte = u"teinte T3"
+            teinte = u"Teinte T3"
         elif values[6] == 4:
-            teinte = u"teinte T4"
+            teinte = u"Teinte T4"
         else:
             teinte = u"Non teintés"
             
         if values[12] != 0:
-            odprisme = "prisme : "+str(values[12])
+            odprisme = "prisme : +%0.2f" % values[12]
             if values[13] == 0:
                 odprisme += u" base inférieure<br />"
             elif values[13] == 1:
@@ -61,7 +61,7 @@ class MainWindow(QtGui.QMainWindow):
             odprisme = u""
             
         if values[18] != 0:
-            ogprisme = "prisme : "+str(values[18])
+            ogprisme = "prisme : +%0.2f" % values[18]
             if values[19] == 0:
                 ogprisme += u" base inférieure<br />"
             elif values[19] == 1:
@@ -74,11 +74,13 @@ class MainWindow(QtGui.QMainWindow):
             ogprisme = u""
         
         if values[20]:
-            avcorrigee = u"Acuité visuelle corrigée en vision de loin:<br />"
+            avcorrigee = u"Acuité visuelle corrigée en vision de loin :<br />"
             if values[21] != 0:
-                avcorrigee += u"Œil Droit "+str(values[21])+"/10<br />"
+                avcorrigee += (u'<span id="marge">Œil Droit %2d/10'+
+                                    u'</span><br />') % values[21]
             if values[22] != 0:
-                avcorrigee += u"Œil Gauche "+str(values[22])+"/10<br />"
+                avcorrigee += (u'<span id="marge">Œil Gauche %2d/10'+
+                                    u'</span><br />') % values[22]
         else:
             avcorrigee = u""
         
@@ -93,9 +95,9 @@ class MainWindow(QtGui.QMainWindow):
             amblyopie += u"Œil Droit et Œil Gauche"
         else:
             if values[24]:
-                amblyopie += u"Œil Droit"
+                amblyopie += u'Œil Droit'
             if values[25]:
-                amblyopie += u"Œil Gauche"
+                amblyopie += u'Œil Gauche'
         
         if avcorrigee != "" or amblyopie != "":
             remarque = u"<u>Remarques :</u>"
@@ -108,13 +110,19 @@ class MainWindow(QtGui.QMainWindow):
                     verres = verres,
                     teinte = teinte,
                     reflets = (u"antireflets" if values[7] else ''),
-                    odsphere = values[8], odcylindre = values[9],
-                    odaxe = str(values[10])+u"°", odaddition = values[11],
-                    odprisme = odprisme, ogsphere = values[14],
-                    ogcylindre = values[15], ogaxe = str(values[16])+u"°",
-                    ogaddition = values[17], ogprisme = ogprisme,
+                    odsphere = "+%0.2f" % values[8],
+                    odcylindre = "%0.2f" % values[9],
+                    odaxe = u"%03d°" % values[10],
+                    odaddition = self.addition(values[11]),
+                    odprisme = odprisme,
+                    ogsphere = "+%0.2f" % values[14],
+                    ogcylindre = "%0.2f" % values[15],
+                    ogaxe = u"%03d°" % values[16],
+                    ogaddition = self.addition(values[17]),
+                    ogprisme = ogprisme,
                     remarque = remarque, amblyopie = amblyopie,
                     avcorrigee = avcorrigee, remarques = values[26])
+        print self.values
 
         # Define the Web view size and behaviour
         self.web = QtWebKit.QWebView()
@@ -180,6 +188,12 @@ class MainWindow(QtGui.QMainWindow):
         self.changeZoom(DEFAULT_ZOOM)
         self.web.setHtml(self.loadValues())
         self.show()
+
+    def addition(self, value):
+        if value != 0:
+            return "Add +%0.2f" % value
+        else:
+            return ""
 
     def changeZoom(self, zoomValue=1):
         """ Modify the size and the zoom of the view to given value """

@@ -66,6 +66,33 @@
                 width: 790px;
                 font-size: 20px;
             }
+			
+			#correction
+            {
+                font-family: "ArialMT";
+                position: absolute;
+                top: 575px;
+                left: 100px;
+                width: 790px;
+                font-size: 20px;
+				font-weight: bold;
+            }
+			
+			td
+			{
+				padding: 5px;
+				white-space: pre;
+			}
+			
+			#remarks
+            {
+                font-family: "ArialMT";
+                position: absolute;
+                top: 720px;
+                left: 100px;
+                width: 790px;
+                font-size: 20px;
+            }
 
             #next
             {
@@ -94,6 +121,11 @@
                 width:990px;
                 height:1400px;
             }
+            
+            #marge
+            {
+                margin-left: 30px;
+            }
         </style>
         <title>Ordonnance</title>
     </head>
@@ -118,23 +150,44 @@
             $cmu
         </p>
         <p id="content">
-            Lunettes (Verres et Montures)<br />
+            Lunettes (verres et montures)<br />
             Port $port<br />
             $verres<br />
             $teinte<br />
             $reflets<br />
             &nbsp;<br />
             avec<br />
-            OD $odsphere ($odcylindre) $odaxe $odaddition<br />
-            $odprisme
-            OG $ogsphere ($ogcylindre) $ogaxe $ogaddition<br />
-            $ogprisme
+		</p>
+		<table id="correction" style="width:400px">
+            <tr>
+			    <td>OD</td>
+                <td>$odsphere</td>
+                <td>($odcylindre)</td>
+                <td>$odaxe</td>
+				<td>$odaddition</td>
+            </tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="3">$odprisme</td>
+			</tr>
+            <tr>
+			    <td>OG</td>
+                <td>$ogsphere</td>
+                <td>($ogcylindre)</td>
+                <td>$ogaxe</td>
+				<td>$ogaddition</td>
+            </tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="3">$ogprisme</td>
+			</tr>
+		</table>
+		<p id="remarks">
             &nbsp;<br />
             $remarque<br />
             $amblyopie<br />
             $avcorrigee<br />
             $remarques<br />
-
         </p>
         <p id="next">
             Prochain rendez-vous :<br />
@@ -145,7 +198,7 @@
         <p id="footnote">
             Membre d'une association de gestion agréée. Le règlement par chèque est accepté.<br />
             &nbsp;<br />
-            Consever l'original ou une photocopie de cette ordonnance.<br />
+            Conserver l'original ou une photocopie de cette ordonnance.<br />
             Aucun duplicata ne sera délivré.
         </p>
         <div id="frame">
