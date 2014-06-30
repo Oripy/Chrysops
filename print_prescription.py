@@ -122,7 +122,6 @@ class MainWindow(QtGui.QMainWindow):
                     ogprisme = ogprisme,
                     remarque = remarque, amblyopie = amblyopie,
                     avcorrigee = avcorrigee, remarques = values[26])
-        print self.values
 
         # Define the Web view size and behaviour
         self.web = QtWebKit.QWebView()
