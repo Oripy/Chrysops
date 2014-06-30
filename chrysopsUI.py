@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'chrysops.ui'
 #
-# Created: Fri Jun 20 17:24:22 2014
+# Created: Mon Jun 30 10:43:52 2014
 #      by: PyQt4 UI code generator 4.9.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -250,6 +250,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(16)
         self.rPrismValue.setFont(font)
+        self.rPrismValue.setSingleStep(0.5)
         self.rPrismValue.setObjectName(_fromUtf8("rPrismValue"))
         self.gridLayout_4.addWidget(self.rPrismValue, 0, 0, 1, 1)
         self.gridLayout_7.addWidget(self.rPrismGroup, 1, 0, 1, 1)
@@ -364,6 +365,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(16)
         self.lPrismValue.setFont(font)
+        self.lPrismValue.setSingleStep(0.5)
         self.lPrismValue.setObjectName(_fromUtf8("lPrismValue"))
         self.gridLayout_5.addWidget(self.lPrismValue, 0, 0, 1, 1)
         self.gridLayout_8.addWidget(self.lPrismGroup, 1, 0, 1, 1)

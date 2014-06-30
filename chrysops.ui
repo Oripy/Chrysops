@@ -488,6 +488,9 @@
                 <pointsize>16</pointsize>
                </font>
               </property>
+              <property name="singleStep">
+               <double>0.500000000000000</double>
+              </property>
              </widget>
             </item>
            </layout>
@@ -719,6 +722,9 @@
                <font>
                 <pointsize>16</pointsize>
                </font>
+              </property>
+              <property name="singleStep">
+               <double>0.500000000000000</double>
               </property>
              </widget>
             </item>
