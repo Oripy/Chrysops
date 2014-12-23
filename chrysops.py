@@ -72,6 +72,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.rAxisSpin.setValue(DEFAULT_AXIS)
         self.rAxisSpin.valueChanged.connect(self.modified)
         
+        self.r90Button.clicked.connect(self.r90Action)
+        self.rFineCheckbox.stateChanged.connect(self.rFineChanged)
+        
         self.rAddSpin.setMaximum(MAX_ADD)
         self.rAddSpin.setMinimum(MIN_ADD)
         self.rAddSpin.setSingleStep(STEP_ADD)
@@ -103,6 +106,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.lAxisSpin.setValue(DEFAULT_AXIS)
         self.lAxisSpin.valueChanged.connect(self.modified)
         
+        self.l90Button.clicked.connect(self.l90Action)
+        self.lFineCheckbox.stateChanged.connect(self.lFineChanged)
+        
         self.lAddSpin.setMaximum(MAX_ADD)
         self.lAddSpin.setMinimum(MIN_ADD)
         self.lAddSpin.setSingleStep(STEP_ADD)
@@ -117,6 +123,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.rLinkCheckbox.setChecked(True)
         self.glassesGroupChanged()
+        
+        self.modified()
 
     def printAction(self):
         """ Send form data to the preview window and display it """
@@ -191,6 +199,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.rSphereSpin.setValue(float(data[8]))
         self.rCylSpin.setValue(float(data[9]))
+        if int(data[10]) % 5 != 0:
+            self.rFineCheckbox.setChecked(True)
+#            self.rFineChanged()
         self.rAxisSpin.setValue(int(data[10]))
         self.rAddSpin.setValue(float(data[11]))
         self.rPrismGroup.setChecked(float(data[12]) != 0)
@@ -199,6 +210,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.lSphereSpin.setValue(float(data[14]))
         self.lCylSpin.setValue(float(data[15]))
+        if int(data[16]) % 5 != 0:
+            self.lFineCheckbox.setChecked(True)
+#            self.lFineChanged()
         self.lAxisSpin.setValue(int(data[16]))
         self.lAddSpin.setValue(float(data[17]))
         self.lPrismGroup.setChecked(float(data[18]) != 0)
@@ -463,10 +477,61 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.functionnalRadio.setChecked(True)
             self.amblyopiaRightEye.setChecked(False)
             self.amblyopiaLeftEye.setChecked(False)
+            
+    def r90Action(self):
+        self.rAxisSpin.setValue(90)
+    
+    def l90Action(self):
+        self.lAxisSpin.setValue(90)
+        
+    def rFineChanged(self):
+        if self.rFineCheckbox.isChecked():
+            self.rAxisSpin.setSingleStep(1)
+            self.rAxisSpin.setMinimum(1)
+        else:
+            self.rAxisSpin.setMinimum(MIN_AXIS)
+            self.rAxisSpin.setSingleStep(5)
+            self.rAxisSpin.setValue(self.rAxisSpin.value()-self.rAxisSpin.value()%5)
+
+    def lFineChanged(self):
+        if self.lFineCheckbox.isChecked():
+            self.lAxisSpin.setSingleStep(1)
+            self.lAxisSpin.setMinimum(1)
+        else:
+            self.lAxisSpin.setMinimum(MIN_AXIS)
+            self.lAxisSpin.setSingleStep(5)
+            self.lAxisSpin.setValue(self.lAxisSpin.value()-self.lAxisSpin.value()%5)
         
     def modified(self):
         """ Action when a value is modified """
-        pass
+        if self.rCylSpin.value() == 0:
+            self.rAxisSpin.setMinimum(0)
+            self.rAxisSpin.setValue(0)
+            self.rAxisSpin.setDisabled(True)
+            self.rFineCheckbox.setDisabled(True)
+            self.r90Button.setDisabled(True)
+        else:
+            if self.rFineCheckbox.isChecked():
+                self.rAxisSpin.setMinimum(1)
+            else:
+                self.rAxisSpin.setMinimum(MIN_AXIS)
+            self.rAxisSpin.setDisabled(False)
+            self.rFineCheckbox.setDisabled(False)
+            self.r90Button.setDisabled(False)
+        if self.lCylSpin.value() == 0:
+            self.lAxisSpin.setMinimum(0)
+            self.lAxisSpin.setValue(0)
+            self.lAxisSpin.setDisabled(True)
+            self.lFineCheckbox.setDisabled(True)
+            self.l90Button.setDisabled(True)
+        else:
+            if self.lFineCheckbox.isChecked():
+                self.lAxisSpin.setMinimum(1)
+            else:
+                self.lAxisSpin.setMinimum(MIN_AXIS)
+            self.lAxisSpin.setDisabled(False)
+            self.lFineCheckbox.setDisabled(False)
+            self.l90Button.setDisabled(False)
 
 if __name__ == '__main__':
     import sys
