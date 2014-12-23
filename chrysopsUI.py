@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'chrysops.ui'
 #
-# Created: Mon Jun 30 10:43:52 2014
-#      by: PyQt4 UI code generator 4.9.5
+# Created: Tue Dec 23 22:06:38 2014
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,12 +12,21 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(810, 786)
+        MainWindow.resize(835, 786)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.gridLayout_3 = QtGui.QGridLayout(self.centralwidget)
@@ -36,9 +45,6 @@ class Ui_MainWindow(object):
         self.label_17 = QtGui.QLabel(self.groupBox_4)
         self.label_17.setObjectName(_fromUtf8("label_17"))
         self.gridLayout_9.addWidget(self.label_17, 1, 0, 1, 1)
-        self.remarksEdit = QtGui.QPlainTextEdit(self.groupBox_4)
-        self.remarksEdit.setObjectName(_fromUtf8("remarksEdit"))
-        self.gridLayout_9.addWidget(self.remarksEdit, 2, 0, 1, 2)
         self.amblyopiaGroup = QtGui.QGroupBox(self.groupBox_4)
         self.amblyopiaGroup.setCheckable(True)
         self.amblyopiaGroup.setChecked(False)
@@ -88,6 +94,9 @@ class Ui_MainWindow(object):
         self.label_18.setObjectName(_fromUtf8("label_18"))
         self.gridLayout_6.addWidget(self.label_18, 2, 0, 1, 1)
         self.gridLayout_9.addWidget(self.visualAcuityGroup, 0, 0, 1, 1)
+        self.remarksEdit = QtGui.QTextEdit(self.groupBox_4)
+        self.remarksEdit.setObjectName(_fromUtf8("remarksEdit"))
+        self.gridLayout_9.addWidget(self.remarksEdit, 2, 0, 1, 2)
         self.gridLayout.addWidget(self.groupBox_4, 8, 0, 1, 4)
         self.label_3 = QtGui.QLabel(self.centralwidget)
         self.label_3.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
@@ -462,80 +471,70 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.printButton, self.searchButton)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Chrysops", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Nom :", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_4.setTitle(QtGui.QApplication.translate("MainWindow", "Remarques", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_17.setText(QtGui.QApplication.translate("MainWindow", "Champ libre :", None, QtGui.QApplication.UnicodeUTF8))
-        self.amblyopiaGroup.setTitle(QtGui.QApplication.translate("MainWindow", "Amblyopie", None, QtGui.QApplication.UnicodeUTF8))
-        self.amblyopiaRightEye.setText(QtGui.QApplication.translate("MainWindow", "OD (Œil Droit)", None, QtGui.QApplication.UnicodeUTF8))
-        self.amblyopiaLeftEye.setText(QtGui.QApplication.translate("MainWindow", "OG (Œil Gauche)", None, QtGui.QApplication.UnicodeUTF8))
-        self.organicRadio.setText(QtGui.QApplication.translate("MainWindow", "Organique", None, QtGui.QApplication.UnicodeUTF8))
-        self.functionnalRadio.setText(QtGui.QApplication.translate("MainWindow", "Fonctionnelle", None, QtGui.QApplication.UnicodeUTF8))
-        self.visualAcuityGroup.setTitle(QtGui.QApplication.translate("MainWindow", "Acuité Visuelle Corrigée en vision de loin", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_16.setText(QtGui.QApplication.translate("MainWindow", "/10", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("MainWindow", "/10", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("MainWindow", "Œil Droit", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_18.setText(QtGui.QApplication.translate("MainWindow", "Œil Gauche", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Date :", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("MainWindow", "Verres", None, QtGui.QApplication.UnicodeUTF8))
-        self.normalGlassesRadio.setText(QtGui.QApplication.translate("MainWindow", "Unifocaux", None, QtGui.QApplication.UnicodeUTF8))
-        self.progressiveGlassesRadio.setText(QtGui.QApplication.translate("MainWindow", "Foyers progressifs", None, QtGui.QApplication.UnicodeUTF8))
-        self.bifocalGlassesRadio.setText(QtGui.QApplication.translate("MainWindow", "Bifocaux", None, QtGui.QApplication.UnicodeUTF8))
-        self.tintGroupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Teinté", None, QtGui.QApplication.UnicodeUTF8))
-        self.T1Radio.setText(QtGui.QApplication.translate("MainWindow", "T1", None, QtGui.QApplication.UnicodeUTF8))
-        self.photochromicRadio.setText(QtGui.QApplication.translate("MainWindow", "Photochromiques", None, QtGui.QApplication.UnicodeUTF8))
-        self.T3Radio.setText(QtGui.QApplication.translate("MainWindow", "T3", None, QtGui.QApplication.UnicodeUTF8))
-        self.T2Radio.setText(QtGui.QApplication.translate("MainWindow", "T2", None, QtGui.QApplication.UnicodeUTF8))
-        self.T4Radio.setText(QtGui.QApplication.translate("MainWindow", "T4", None, QtGui.QApplication.UnicodeUTF8))
-        self.rightEyeGroupBox.setTitle(QtGui.QApplication.translate("MainWindow", "OD (Œil Droit)", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("MainWindow", "Axe", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("MainWindow", "Cylindre", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("MainWindow", "Sphere", None, QtGui.QApplication.UnicodeUTF8))
-        self.rLinkCheckbox.setText(QtGui.QApplication.translate("MainWindow", "Lié", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("MainWindow", "Addition", None, QtGui.QApplication.UnicodeUTF8))
-        self.rLabelCylPos.setToolTip(QtGui.QApplication.translate("MainWindow", "Le cylindre indiqué est positif, une conversion sera effectuée lors de la Sauvegarde", None, QtGui.QApplication.UnicodeUTF8))
-        self.rLabelCylPos.setText(QtGui.QApplication.translate("MainWindow", "Cylindre positif", None, QtGui.QApplication.UnicodeUTF8))
-        self.rPrismGroup.setTitle(QtGui.QApplication.translate("MainWindow", "Prisme", None, QtGui.QApplication.UnicodeUTF8))
-        self.rInternalRadio.setText(QtGui.QApplication.translate("MainWindow", "Interne", None, QtGui.QApplication.UnicodeUTF8))
-        self.rSuperiorRadio.setText(QtGui.QApplication.translate("MainWindow", "Supérieure", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_13.setText(QtGui.QApplication.translate("MainWindow", "Base :", None, QtGui.QApplication.UnicodeUTF8))
-        self.rExternalRadio.setText(QtGui.QApplication.translate("MainWindow", "Externe", None, QtGui.QApplication.UnicodeUTF8))
-        self.rInferiorRadio.setText(QtGui.QApplication.translate("MainWindow", "Inférieure", None, QtGui.QApplication.UnicodeUTF8))
-        self.leftEyeGroupBox.setTitle(QtGui.QApplication.translate("MainWindow", "OG (Œil Gauche)", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("MainWindow", "Axe", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("MainWindow", "Cylindre", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("MainWindow", "Sphere", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("MainWindow", "Addition", None, QtGui.QApplication.UnicodeUTF8))
-        self.lLinkCheckbox.setText(QtGui.QApplication.translate("MainWindow", "Lié", None, QtGui.QApplication.UnicodeUTF8))
-        self.lLabelCylPos.setToolTip(QtGui.QApplication.translate("MainWindow", "Le cylindre indiqué est positif, une conversion sera effectuée lors de la Sauvegarde", None, QtGui.QApplication.UnicodeUTF8))
-        self.lLabelCylPos.setText(QtGui.QApplication.translate("MainWindow", "Cylindre positif", None, QtGui.QApplication.UnicodeUTF8))
-        self.lPrismGroup.setTitle(QtGui.QApplication.translate("MainWindow", "Prisme", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_14.setText(QtGui.QApplication.translate("MainWindow", "Base :", None, QtGui.QApplication.UnicodeUTF8))
-        self.lInternalRadio.setText(QtGui.QApplication.translate("MainWindow", "Interne", None, QtGui.QApplication.UnicodeUTF8))
-        self.lSuperiorRadio.setText(QtGui.QApplication.translate("MainWindow", "Supérieure", None, QtGui.QApplication.UnicodeUTF8))
-        self.lInferiorRadio.setText(QtGui.QApplication.translate("MainWindow", "Inférieure", None, QtGui.QApplication.UnicodeUTF8))
-        self.lExternalRadio.setText(QtGui.QApplication.translate("MainWindow", "Externe", None, QtGui.QApplication.UnicodeUTF8))
-        self.CMUCheckBox.setText(QtGui.QApplication.translate("MainWindow", "CMU", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Port", None, QtGui.QApplication.UnicodeUTF8))
-        self.permUseRadio.setText(QtGui.QApplication.translate("MainWindow", "Permanent", None, QtGui.QApplication.UnicodeUTF8))
-        self.itermUseRadio.setText(QtGui.QApplication.translate("MainWindow", "Intermittent", None, QtGui.QApplication.UnicodeUTF8))
-        self.bothUseRadio.setText(QtGui.QApplication.translate("MainWindow", "Intermittent ou Permanent", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("MainWindow", "Prénom :", None, QtGui.QApplication.UnicodeUTF8))
-        self.antiglareCheckBox.setText(QtGui.QApplication.translate("MainWindow", "Antireflets", None, QtGui.QApplication.UnicodeUTF8))
-        self.printButton.setText(QtGui.QApplication.translate("MainWindow", "Imprimer", None, QtGui.QApplication.UnicodeUTF8))
-        self.clearButton.setText(QtGui.QApplication.translate("MainWindow", "Remise à zéro", None, QtGui.QApplication.UnicodeUTF8))
-        self.searchButton.setText(QtGui.QApplication.translate("MainWindow", "Rechercher", None, QtGui.QApplication.UnicodeUTF8))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Chrysops", None))
+        self.label_2.setText(_translate("MainWindow", "Nom :", None))
+        self.groupBox_4.setTitle(_translate("MainWindow", "Remarques", None))
+        self.label_17.setText(_translate("MainWindow", "Champ libre :", None))
+        self.amblyopiaGroup.setTitle(_translate("MainWindow", "Amblyopie", None))
+        self.amblyopiaRightEye.setText(_translate("MainWindow", "OD (Œil Droit)", None))
+        self.amblyopiaLeftEye.setText(_translate("MainWindow", "OG (Œil Gauche)", None))
+        self.organicRadio.setText(_translate("MainWindow", "Organique", None))
+        self.functionnalRadio.setText(_translate("MainWindow", "Fonctionnelle", None))
+        self.visualAcuityGroup.setTitle(_translate("MainWindow", "Acuité Visuelle Corrigée en vision de loin", None))
+        self.label_16.setText(_translate("MainWindow", "/10", None))
+        self.label_15.setText(_translate("MainWindow", "/10", None))
+        self.label_4.setText(_translate("MainWindow", "Œil Droit", None))
+        self.label_18.setText(_translate("MainWindow", "Œil Gauche", None))
+        self.label_3.setText(_translate("MainWindow", "Date :", None))
+        self.groupBox_2.setTitle(_translate("MainWindow", "Verres", None))
+        self.normalGlassesRadio.setText(_translate("MainWindow", "Unifocaux", None))
+        self.progressiveGlassesRadio.setText(_translate("MainWindow", "Foyers progressifs", None))
+        self.bifocalGlassesRadio.setText(_translate("MainWindow", "Bifocaux", None))
+        self.tintGroupBox.setTitle(_translate("MainWindow", "Teinté", None))
+        self.T1Radio.setText(_translate("MainWindow", "T1", None))
+        self.photochromicRadio.setText(_translate("MainWindow", "Photochromiques", None))
+        self.T3Radio.setText(_translate("MainWindow", "T3", None))
+        self.T2Radio.setText(_translate("MainWindow", "T2", None))
+        self.T4Radio.setText(_translate("MainWindow", "T4", None))
+        self.rightEyeGroupBox.setTitle(_translate("MainWindow", "OD (Œil Droit)", None))
+        self.label_7.setText(_translate("MainWindow", "Axe", None))
+        self.label_8.setText(_translate("MainWindow", "Cylindre", None))
+        self.label_5.setText(_translate("MainWindow", "Sphere", None))
+        self.rLinkCheckbox.setText(_translate("MainWindow", "Lié", None))
+        self.label_6.setText(_translate("MainWindow", "Addition", None))
+        self.rLabelCylPos.setToolTip(_translate("MainWindow", "Le cylindre indiqué est positif, une conversion sera effectuée lors de la Sauvegarde", None))
+        self.rLabelCylPos.setText(_translate("MainWindow", "Cylindre positif", None))
+        self.rPrismGroup.setTitle(_translate("MainWindow", "Prisme", None))
+        self.rInternalRadio.setText(_translate("MainWindow", "Interne", None))
+        self.rSuperiorRadio.setText(_translate("MainWindow", "Supérieure", None))
+        self.label_13.setText(_translate("MainWindow", "Base :", None))
+        self.rExternalRadio.setText(_translate("MainWindow", "Externe", None))
+        self.rInferiorRadio.setText(_translate("MainWindow", "Inférieure", None))
+        self.leftEyeGroupBox.setTitle(_translate("MainWindow", "OG (Œil Gauche)", None))
+        self.label_9.setText(_translate("MainWindow", "Axe", None))
+        self.label_10.setText(_translate("MainWindow", "Cylindre", None))
+        self.label_11.setText(_translate("MainWindow", "Sphere", None))
+        self.label_12.setText(_translate("MainWindow", "Addition", None))
+        self.lLinkCheckbox.setText(_translate("MainWindow", "Lié", None))
+        self.lLabelCylPos.setToolTip(_translate("MainWindow", "Le cylindre indiqué est positif, une conversion sera effectuée lors de la Sauvegarde", None))
+        self.lLabelCylPos.setText(_translate("MainWindow", "Cylindre positif", None))
+        self.lPrismGroup.setTitle(_translate("MainWindow", "Prisme", None))
+        self.label_14.setText(_translate("MainWindow", "Base :", None))
+        self.lInternalRadio.setText(_translate("MainWindow", "Interne", None))
+        self.lSuperiorRadio.setText(_translate("MainWindow", "Supérieure", None))
+        self.lInferiorRadio.setText(_translate("MainWindow", "Inférieure", None))
+        self.lExternalRadio.setText(_translate("MainWindow", "Externe", None))
+        self.CMUCheckBox.setText(_translate("MainWindow", "CMU", None))
+        self.groupBox.setTitle(_translate("MainWindow", "Port", None))
+        self.permUseRadio.setText(_translate("MainWindow", "Permanent", None))
+        self.itermUseRadio.setText(_translate("MainWindow", "Intermittent", None))
+        self.bothUseRadio.setText(_translate("MainWindow", "Intermittent ou Permanent", None))
+        self.label.setText(_translate("MainWindow", "Prénom :", None))
+        self.antiglareCheckBox.setText(_translate("MainWindow", "Antireflets", None))
+        self.printButton.setText(_translate("MainWindow", "Aperçu avant Impression", None))
+        self.clearButton.setText(_translate("MainWindow", "Remise à zéro", None))
+        self.searchButton.setText(_translate("MainWindow", "Rechercher", None))
 
 from anglespinbox import angleSpinBox
 from negativezerospinbox import negativeZeroSpinBox
 from dotspinbox import dotSpinBox
-
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    MainWindow = QtGui.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-

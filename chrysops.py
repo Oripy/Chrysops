@@ -144,6 +144,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def clearAction(self):
         """ Reset the form """
         self.data = [item[2] for item in database.DATA_STRUCTURE]
+        self.nameEdit.setFocus()
 
     def getData(self):
         """ Returns all form data """
@@ -173,7 +174,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.amblyopia,
                 self.amblyopiaRightEye.isChecked(),
                 self.amblyopiaLeftEye.isChecked(),
-                self.remarksEdit.toPlainText().toLatin1()
+                self.remarksEdit.toPlainText().toUtf8()
                 ]
 
     def loadValues(self, data):
@@ -442,7 +443,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.rLinkCheckbox.setChecked(state)
     
     def prismGroupChanged(self):
-        """ Reset values if prism group is unchecked """
+        """ values if prism group is unchecked """
         if not self.rPrismGroup.isChecked():
             self.rPrismValue.setValue(0)
             self.rInferiorRadio.setChecked(True)

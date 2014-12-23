@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>810</width>
+    <width>835</width>
     <height>786</height>
    </rect>
   </property>
@@ -42,9 +42,6 @@
             <string>Champ libre :</string>
            </property>
           </widget>
-         </item>
-         <item row="2" column="0" colspan="2">
-          <widget class="QPlainTextEdit" name="remarksEdit"/>
          </item>
          <item row="0" column="1">
           <widget class="QGroupBox" name="amblyopiaGroup">
@@ -154,6 +151,9 @@
             </item>
            </layout>
           </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QTextEdit" name="remarksEdit"/>
          </item>
         </layout>
        </widget>
@@ -804,7 +804,7 @@
       <item>
        <widget class="QPushButton" name="printButton">
         <property name="text">
-         <string>Imprimer</string>
+         <string>Aperçu avant Impression</string>
         </property>
        </widget>
       </item>

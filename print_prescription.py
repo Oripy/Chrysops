@@ -35,17 +35,17 @@ class MainWindow(QtGui.QMainWindow):
             verres = u"Unifocaux"
         
         if values[6] == 5:
-            teinte = u"Photochromiques"
+            teinte = u"Verres teintés (Photochromiques)"
         elif values[6] == 1:
-            teinte = u"Teinte T1"
+            teinte = u"Verres teintés T1"
         elif values[6] == 2:
-            teinte = u"Teinte T2"
+            teinte = u"Verres teintés T2"
         elif values[6] == 3:
-            teinte = u"Teinte T3"
+            teinte = u"Verres teintés T3"
         elif values[6] == 4:
-            teinte = u"Teinte T4"
+            teinte = u"Verres teintés T4"
         else:
-            teinte = u"Non teintés"
+            teinte = u"Verres non teintés"
             
         if values[12] != 0:
             odprisme = "prisme : %+0.2f" % values[12]
@@ -99,10 +99,10 @@ class MainWindow(QtGui.QMainWindow):
             if values[25]:
                 amblyopie += u'Œil Gauche'
         
-        if avcorrigee != "" or amblyopie != "":
+        if avcorrigee != "" or amblyopie != "" or values[26] != "":
             remarque = u"<u>Remarques :</u>"
         else:
-            remarque = u""       
+            remarque = u""
         
         self.values = dict(datePrescription = values[2].toString('dd/MM/yyyy'),
                     prenom = str(values[1]), nom = str(values[0]),
@@ -203,8 +203,8 @@ class MainWindow(QtGui.QMainWindow):
         """ loading dynamic values """
         data = self.page.substitute(
                datePrescription = self.values['datePrescription'],
-               prenom = self.values['prenom'].capitalize(),
-               nom = self.values['nom'].upper(),
+               prenom = self.values['prenom'].decode('utf-8').title(),
+               nom = self.values['nom'].decode('utf-8').upper(),
                cmu = self.values['cmu'],
                port = self.values['port'],
                verres = self.values['verres'],
