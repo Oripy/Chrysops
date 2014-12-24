@@ -182,7 +182,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.amblyopia,
                 self.amblyopiaRightEye.isChecked(),
                 self.amblyopiaLeftEye.isChecked(),
-                self.remarksEdit.toPlainText().toUtf8()
+                self.remarksEdit.toPlainText().toUtf8(),
+                self.distanceVisionCheckbox.isChecked(),
+                self.nearVisionCheckbox.isChecked()
                 ]
 
     def loadValues(self, data):
@@ -233,6 +235,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.amblyopiaLeftEye.setChecked(str2bool(data[25]))
         
         self.remarksEdit.setPlainText(str(data[26]))
+        
+        self.distanceVisionCheckbox.setChecked(str2bool(data[27]))
+        self.nearVisionCheckbox.setChecked(str2bool(data[28]))
         
         self.glassesGroupChanged()
         self.visualAcuityGroupChanged()
@@ -438,6 +443,13 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.rAddSpin.setValue(0)
             self.lAddSpin.setValue(0)
             self.rLinkCheckbox.setChecked(True)
+            self.distanceVisionCheckbox.setDisabled(False)
+            self.nearVisionCheckbox.setDisabled(False)
+        else:
+            self.distanceVisionCheckbox.setChecked(True)
+            self.nearVisionCheckbox.setChecked(True)
+            self.distanceVisionCheckbox.setDisabled(True)
+            self.nearVisionCheckbox.setDisabled(True)
         
         self.rAddSpin.setDisabled(self.normalGlassesRadio.isChecked())
         self.lAddSpin.setDisabled(self.normalGlassesRadio.isChecked())

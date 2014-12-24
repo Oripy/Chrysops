@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>835</width>
-    <height>800</height>
+    <width>836</width>
+    <height>796</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -153,7 +153,11 @@
           </widget>
          </item>
          <item row="2" column="0" colspan="2">
-          <widget class="QTextEdit" name="remarksEdit"/>
+          <widget class="QTextEdit" name="remarksEdit">
+           <property name="tabChangesFocus">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -825,11 +829,48 @@
        </widget>
       </item>
       <item row="4" column="3">
-       <widget class="QCheckBox" name="antiglareCheckBox">
-        <property name="text">
-         <string>Antireflets</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QCheckBox" name="antiglareCheckBox">
+          <property name="text">
+           <string>Antireflets</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="distanceVisionCheckbox">
+          <property name="text">
+           <string>Vision de loin</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="nearVisionCheckbox">
+          <property name="text">
+           <string>Vision de près</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -901,6 +942,8 @@
   <tabstop>T3Radio</tabstop>
   <tabstop>T4Radio</tabstop>
   <tabstop>antiglareCheckBox</tabstop>
+  <tabstop>distanceVisionCheckbox</tabstop>
+  <tabstop>nearVisionCheckbox</tabstop>
   <tabstop>rSphereSpin</tabstop>
   <tabstop>rCylSpin</tabstop>
   <tabstop>rAxisSpin</tabstop>
@@ -912,8 +955,8 @@
   <tabstop>rPrismGroup</tabstop>
   <tabstop>rPrismValue</tabstop>
   <tabstop>rInferiorRadio</tabstop>
-  <tabstop>rExternalRadio</tabstop>
   <tabstop>rSuperiorRadio</tabstop>
+  <tabstop>rExternalRadio</tabstop>
   <tabstop>rInternalRadio</tabstop>
   <tabstop>lPrismGroup</tabstop>
   <tabstop>lPrismValue</tabstop>
@@ -930,9 +973,14 @@
   <tabstop>amblyopiaRightEye</tabstop>
   <tabstop>amblyopiaLeftEye</tabstop>
   <tabstop>remarksEdit</tabstop>
-  <tabstop>CMUCheckBox</tabstop>
   <tabstop>printButton</tabstop>
+  <tabstop>clearButton</tabstop>
   <tabstop>searchButton</tabstop>
+  <tabstop>CMUCheckBox</tabstop>
+  <tabstop>r90Button</tabstop>
+  <tabstop>rFineCheckbox</tabstop>
+  <tabstop>l90Button</tabstop>
+  <tabstop>lFineCheckbox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

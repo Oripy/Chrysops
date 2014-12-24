@@ -35,7 +35,9 @@ DATA_STRUCTURE = [
     ["REM_amblyopie_value", "TINYINT", 0],              #23
     ["REM_amblyopie_OD", "BOOLEAN", False],             #24
     ["REM_amblyopie_OG", "BOOLEAN", False],             #25
-    ["remarques", "TEXT", ""]                           #26
+    ["remarques", "TEXT", ""],                           #26
+    ["distance_vision", "BOOLEAN", True],               #27
+    ["near_vision", "BOOLEAN", True]                    #28
     ]
 
 class MainWindow(QtGui.QMainWindow):

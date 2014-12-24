@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'chrysops.ui'
 #
-# Created: Tue Dec 23 23:32:09 2014
+# Created: Wed Dec 24 11:19:20 2014
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(835, 800)
+        MainWindow.resize(836, 796)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.gridLayout_3 = QtGui.QGridLayout(self.centralwidget)
@@ -95,6 +95,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.label_18, 2, 0, 1, 1)
         self.gridLayout_9.addWidget(self.visualAcuityGroup, 0, 0, 1, 1)
         self.remarksEdit = QtGui.QTextEdit(self.groupBox_4)
+        self.remarksEdit.setTabChangesFocus(True)
         self.remarksEdit.setObjectName(_fromUtf8("remarksEdit"))
         self.gridLayout_9.addWidget(self.remarksEdit, 2, 0, 1, 2)
         self.gridLayout.addWidget(self.groupBox_4, 8, 0, 1, 4)
@@ -423,9 +424,22 @@ class Ui_MainWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label.setObjectName(_fromUtf8("label"))
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
+        self.verticalLayout_3 = QtGui.QVBoxLayout()
+        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.antiglareCheckBox = QtGui.QCheckBox(self.centralwidget)
         self.antiglareCheckBox.setObjectName(_fromUtf8("antiglareCheckBox"))
-        self.gridLayout.addWidget(self.antiglareCheckBox, 4, 3, 1, 1)
+        self.verticalLayout_3.addWidget(self.antiglareCheckBox)
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem)
+        self.distanceVisionCheckbox = QtGui.QCheckBox(self.centralwidget)
+        self.distanceVisionCheckbox.setChecked(True)
+        self.distanceVisionCheckbox.setObjectName(_fromUtf8("distanceVisionCheckbox"))
+        self.verticalLayout_3.addWidget(self.distanceVisionCheckbox)
+        self.nearVisionCheckbox = QtGui.QCheckBox(self.centralwidget)
+        self.nearVisionCheckbox.setChecked(True)
+        self.nearVisionCheckbox.setObjectName(_fromUtf8("nearVisionCheckbox"))
+        self.verticalLayout_3.addWidget(self.nearVisionCheckbox)
+        self.gridLayout.addLayout(self.verticalLayout_3, 4, 3, 1, 1)
         self.gridLayout_3.addLayout(self.gridLayout, 2, 0, 1, 1)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(-1, -1, 0, 0)
@@ -459,7 +473,9 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.T2Radio, self.T3Radio)
         MainWindow.setTabOrder(self.T3Radio, self.T4Radio)
         MainWindow.setTabOrder(self.T4Radio, self.antiglareCheckBox)
-        MainWindow.setTabOrder(self.antiglareCheckBox, self.rSphereSpin)
+        MainWindow.setTabOrder(self.antiglareCheckBox, self.distanceVisionCheckbox)
+        MainWindow.setTabOrder(self.distanceVisionCheckbox, self.nearVisionCheckbox)
+        MainWindow.setTabOrder(self.nearVisionCheckbox, self.rSphereSpin)
         MainWindow.setTabOrder(self.rSphereSpin, self.rCylSpin)
         MainWindow.setTabOrder(self.rCylSpin, self.rAxisSpin)
         MainWindow.setTabOrder(self.rAxisSpin, self.rAddSpin)
@@ -470,9 +486,9 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.lAddSpin, self.rPrismGroup)
         MainWindow.setTabOrder(self.rPrismGroup, self.rPrismValue)
         MainWindow.setTabOrder(self.rPrismValue, self.rInferiorRadio)
-        MainWindow.setTabOrder(self.rInferiorRadio, self.rExternalRadio)
-        MainWindow.setTabOrder(self.rExternalRadio, self.rSuperiorRadio)
-        MainWindow.setTabOrder(self.rSuperiorRadio, self.rInternalRadio)
+        MainWindow.setTabOrder(self.rInferiorRadio, self.rSuperiorRadio)
+        MainWindow.setTabOrder(self.rSuperiorRadio, self.rExternalRadio)
+        MainWindow.setTabOrder(self.rExternalRadio, self.rInternalRadio)
         MainWindow.setTabOrder(self.rInternalRadio, self.lPrismGroup)
         MainWindow.setTabOrder(self.lPrismGroup, self.lPrismValue)
         MainWindow.setTabOrder(self.lPrismValue, self.lInferiorRadio)
@@ -488,9 +504,14 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.organicRadio, self.amblyopiaRightEye)
         MainWindow.setTabOrder(self.amblyopiaRightEye, self.amblyopiaLeftEye)
         MainWindow.setTabOrder(self.amblyopiaLeftEye, self.remarksEdit)
-        MainWindow.setTabOrder(self.remarksEdit, self.CMUCheckBox)
-        MainWindow.setTabOrder(self.CMUCheckBox, self.printButton)
-        MainWindow.setTabOrder(self.printButton, self.searchButton)
+        MainWindow.setTabOrder(self.remarksEdit, self.printButton)
+        MainWindow.setTabOrder(self.printButton, self.clearButton)
+        MainWindow.setTabOrder(self.clearButton, self.searchButton)
+        MainWindow.setTabOrder(self.searchButton, self.CMUCheckBox)
+        MainWindow.setTabOrder(self.CMUCheckBox, self.r90Button)
+        MainWindow.setTabOrder(self.r90Button, self.rFineCheckbox)
+        MainWindow.setTabOrder(self.rFineCheckbox, self.l90Button)
+        MainWindow.setTabOrder(self.l90Button, self.lFineCheckbox)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "Chrysops", None))
@@ -557,6 +578,8 @@ class Ui_MainWindow(object):
         self.bothUseRadio.setText(_translate("MainWindow", "Intermittent ou Permanent", None))
         self.label.setText(_translate("MainWindow", "Prénom :", None))
         self.antiglareCheckBox.setText(_translate("MainWindow", "Antireflets", None))
+        self.distanceVisionCheckbox.setText(_translate("MainWindow", "Vision de loin", None))
+        self.nearVisionCheckbox.setText(_translate("MainWindow", "Vision de près", None))
         self.printButton.setText(_translate("MainWindow", "Aperçu avant Impression", None))
         self.clearButton.setText(_translate("MainWindow", "Remise à zéro", None))
         self.searchButton.setText(_translate("MainWindow", "Rechercher", None))

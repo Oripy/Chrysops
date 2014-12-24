@@ -98,6 +98,16 @@ class MainWindow(QtGui.QMainWindow):
                 amblyopie += u'Œil Droit'
             if values[25]:
                 amblyopie += u'Œil Gauche'
+                
+        if values[27] and values[28]:
+            vision = u"Vision de loin et de près"
+        elif values[27]:
+            vision = u"Vision de loin"
+        elif values[28]:
+            vision = u"Vision de près"
+        else:
+            vision = u""
+            
         
         if avcorrigee != "" or amblyopie != "" or values[26] != "":
             remarque = u"<u>Remarques :</u>"
@@ -121,7 +131,8 @@ class MainWindow(QtGui.QMainWindow):
                     ogaddition = self.addition(values[17]),
                     ogprisme = ogprisme,
                     remarque = remarque, amblyopie = amblyopie,
-                    avcorrigee = avcorrigee, remarques = values[26])
+                    avcorrigee = avcorrigee, remarques = values[26],
+                    vision = vision)
 
         # Define the Web view size and behaviour
         self.web = QtWebKit.QWebView()
@@ -223,7 +234,8 @@ class MainWindow(QtGui.QMainWindow):
                remarque = self.values['remarque'],
                amblyopie = self.values['amblyopie'],
                avcorrigee = self.values['avcorrigee'],
-               remarques = self.values['remarques'].replace("\n", "<br />"))
+               remarques = self.values['remarques'].replace("\n", "<br />"),
+               vision = self.values['vision'])
         return data        
         
     def printIt(self, output="printer"):
