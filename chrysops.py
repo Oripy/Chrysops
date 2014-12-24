@@ -201,7 +201,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.rCylSpin.setValue(float(data[9]))
         if int(data[10]) % 5 != 0:
             self.rFineCheckbox.setChecked(True)
-#            self.rFineChanged()
+        else:
+            self.rFineCheckbox.setChecked(False)
         self.rAxisSpin.setValue(int(data[10]))
         self.rAddSpin.setValue(float(data[11]))
         self.rPrismGroup.setChecked(float(data[12]) != 0)
@@ -212,7 +213,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.lCylSpin.setValue(float(data[15]))
         if int(data[16]) % 5 != 0:
             self.lFineCheckbox.setChecked(True)
-#            self.lFineChanged()
+        else:
+            self.lFineCheckbox.setChecked(False)
         self.lAxisSpin.setValue(int(data[16]))
         self.lAddSpin.setValue(float(data[17]))
         self.lPrismGroup.setChecked(float(data[18]) != 0)
