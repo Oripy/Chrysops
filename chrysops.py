@@ -12,6 +12,10 @@ from chrysopsUI import Ui_MainWindow
 import print_prescription
 import database
 
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 from config import (MAX_SPHERE, MIN_SPHERE, STEP_SPHERE, DEFAULT_SPHERE,
                     MAX_CYL, MIN_CYL, STEP_CYL, DEFAULT_CYL,
                     MAX_AXIS, MIN_AXIS, STEP_AXIS, DEFAULT_AXIS,
