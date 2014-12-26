@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'chrysops.ui'
 #
-# Created: Wed Dec 24 11:19:20 2014
+# Created: Fri Dec 26 19:36:46 2014
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(836, 796)
+        MainWindow.resize(914, 796)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.gridLayout_3 = QtGui.QGridLayout(self.centralwidget)
