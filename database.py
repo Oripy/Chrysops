@@ -11,7 +11,7 @@ from datetime import date
 DATA_STRUCTURE = [
     ["nom", "VARCHAR(255)", ""],                        #0
     ["prenom", "VARCHAR(255)", ""],                     #1
-    ["date", "DATE", QtCore.QDate.currentDate()],       #2
+    ["date", "DATE", QtCore.QDate.currentDate().toString("yyyy-MM-dd")],       #2
     ["cmu", "BOOLEAN", False],                          #3
     ["port", "TINYINT", 0],                             #4
     ["verres", "TINYINT", 0],                           #5
