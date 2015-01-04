@@ -186,16 +186,16 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.amblyopia,
                 self.amblyopiaRightEye.isChecked(),
                 self.amblyopiaLeftEye.isChecked(),
-                self.remarksEdit.toPlainText().toUtf8(),
+                self.remarksEdit.toPlainText(),
                 self.distanceVisionCheckbox.isChecked(),
                 self.nearVisionCheckbox.isChecked()
                 ]
 
     def loadValues(self, data):
         """ Change form values to given data """
-        self.nameEdit.setText(str(data[0]))
-        self.surnameEdit.setText(str(data[1]))
-        self.dateEdit.setDate(QtCore.QDate.fromString(str(data[2]),
+        self.nameEdit.setText(data[0])
+        self.surnameEdit.setText(data[1])
+        self.dateEdit.setDate(QtCore.QDate.fromString(data[2],
                                                       "yyyy-MM-dd"))
         self.CMUCheckBox.setChecked(str2bool(data[3]))
         self.use = int(data[4])
@@ -238,7 +238,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.amblyopiaRightEye.setChecked(str2bool(data[24]))
         self.amblyopiaLeftEye.setChecked(str2bool(data[25]))
         
-        self.remarksEdit.setPlainText(str(data[26]))
+        self.remarksEdit.setText(data[26])
         
         self.distanceVisionCheckbox.setChecked(str2bool(data[27]))
         self.nearVisionCheckbox.setChecked(str2bool(data[28]))
