@@ -156,6 +156,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def clearAction(self):
         """ Reset the form """
         self.data = [item[2] for item in database.DATA_STRUCTURE]
+        self.dateEdit.setDate(QtCore.QDate.currentDate())
         self.nameEdit.setFocus()
 
     def getData(self):
