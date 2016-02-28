@@ -56,6 +56,14 @@ def formatAxis(value):
         180°       """
     value = float(value)
     return u'%03d°' % value
+    
+def formatPrism(value):
+    """ Ensure that the values are shown with 2 decimals """
+    value = float(value)
+    if value == 0:
+        return '0.00'
+    else:
+        return '%0.2f' % value
 
 def formatType(value):
     """ Convert saved numbers into respective human readable text """

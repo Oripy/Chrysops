@@ -16,19 +16,19 @@ DATA_STRUCTURE = [
     ["port", "TINYINT", 0],                             #4
     ["verres", "TINYINT", 0],                           #5
     ["teinte", "TINYINT", 0],                           #6
-    ["reflets", "BOOLEAN", False],                      #7
+    ["reflets", "BOOLEAN", True],                      #7
     ["OD_sphere", "REAL", 0],                           #8
     ["OD_cylindre", "REAL", 0],                         #9
     ["OD_axe", "REAL", 180],                            #10
     ["OD_addition", "REAL", 0],                         #11
     ["OD_prisme", "REAL", 0],                           #12
-    ["OD_base", "TINYINT", 0],                          #13
+    ["OD_base", "TINYINT", 2],                          #13
     ["OG_sphere", "REAL", 0],                           #14
     ["OG_cylindre", "REAL", 0],                         #15
     ["OG_axe", "REAL", 180],                            #16
     ["OG_addition", "REAL", 0],                         #17
-    ["OG_prisme", "REAL", 0],                           #18
-    ["OG_base", "TINYINT", 0],                          #19
+    ["OG_prisme", "REAL", 1],                           #18
+    ["OG_base", "TINYINT", 2],                          #19
     ["REM_acuite", "BOOLEAN", False],                   #20
     ["REM_acuite_OD", "REAL", 0],                       #21
     ["REM_acuite_OG", "REAL", 0],                       #22

@@ -5,9 +5,9 @@ Created on Sun Feb 02 2014
 @author: pmaurier
 """
 
-from PyQt4 import QtCore, QtGui
-
-from chrysopsUI import Ui_MainWindow 
+from PyQt4 import QtCore, QtGui, uic
+Ui_MainWindow = uic.loadUiType("chrysops.ui")[0]
+#from chrysopsUI import Ui_MainWindow 
 
 import print_prescription
 import database
@@ -44,6 +44,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.initUI()
         
     def initUI(self):
+        
         """ create actions and default values of the interface """
         self.dateEdit.setDate(QtCore.QDate.currentDate())
         self.printButton.clicked.connect(self.printAction)
@@ -53,6 +54,10 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.normalGlassesRadio.toggled.connect(self.glassesGroupChanged)
         self.progressiveGlassesRadio.toggled.connect(self.glassesGroupChanged)
         self.bifocalGlassesRadio.toggled.connect(self.glassesGroupChanged)
+        
+        self.tintGroupBox.toggled.connect(self.tintGroupBoxChanged)        
+        
+        self.antiglareCheckBox.setChecked(True)
         
         # Right Eye     
         # Correction
@@ -87,6 +92,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.rLinkCheckbox.stateChanged.connect(self.linkChanged)
         self.rPrismGroup.toggled.connect(self.prismGroupChanged)
+        self.rPrismValue.setSingleStep(0.25)
         
         # Left Eye
         # Correction
@@ -121,6 +127,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.lLinkCheckbox.stateChanged.connect(self.linkChanged)
         self.lPrismGroup.toggled.connect(self.prismGroupChanged)
+        self.lPrismValue.setSingleStep(0.25)
         
         self.visualAcuityGroup.toggled.connect(self.visualAcuityGroupChanged)
         self.amblyopiaGroup.toggled.connect(self.amblyopiaGroupChanged)        
@@ -461,6 +468,12 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.rLinkCheckbox.setDisabled(self.normalGlassesRadio.isChecked())
         self.lLinkCheckbox.setDisabled(self.normalGlassesRadio.isChecked())
     
+    def tintGroupBoxChanged(self):
+        if self.tintGroupBox.isChecked():
+            self.antiglareCheckBox.setChecked(False)
+        else:
+            self.antiglareCheckBox.setChecked(True)
+    
     def additionChanged(self):
         """ Change the other addition value if link is checked """
         if self.rLinkCheckbox.isChecked():
@@ -479,10 +492,14 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         """ values if prism group is unchecked """
         if not self.rPrismGroup.isChecked():
             self.rPrismValue.setValue(0)
-            self.rInferiorRadio.setChecked(True)
+        else:
+            self.rPrismValue.setValue(1)
+            self.rExternalRadio.setChecked(True)
         if not self.lPrismGroup.isChecked():
             self.lPrismValue.setValue(0)
-            self.lInferiorRadio.setChecked(True)
+        else:
+            self.lPrismValue.setValue(1)
+            self.lExternalRadio.setChecked(True)
     
     def visualAcuityGroupChanged(self):
         """ Reset values if visual acuity group is unchecked """

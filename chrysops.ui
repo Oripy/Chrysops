@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>914</width>
-    <height>796</height>
+    <height>789</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -346,7 +346,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Sphere</string>
+              <string>Sphère</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -467,14 +467,17 @@
             <bool>false</bool>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="3" column="1">
-             <widget class="QRadioButton" name="rInternalRadio">
+            <item row="2" column="0">
+             <widget class="QRadioButton" name="rExternalRadio">
               <property name="text">
-               <string>Interne</string>
+               <string>Externe</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
-            <item row="3" column="0">
+            <item row="2" column="1">
              <widget class="QRadioButton" name="rSuperiorRadio">
               <property name="text">
                <string>Supérieure</string>
@@ -488,25 +491,8 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
-             <widget class="QRadioButton" name="rExternalRadio">
-              <property name="text">
-               <string>Externe</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QRadioButton" name="rInferiorRadio">
-              <property name="text">
-               <string>Inférieure</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="0">
-             <widget class="dotSpinBox" name="rPrismValue">
+             <widget class="prismSpinBox" name="rPrismValue">
               <property name="font">
                <font>
                 <pointsize>16</pointsize>
@@ -514,6 +500,23 @@
               </property>
               <property name="singleStep">
                <double>0.500000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QRadioButton" name="rInferiorRadio">
+              <property name="text">
+               <string>Inférieure</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QRadioButton" name="rInternalRadio">
+              <property name="text">
+               <string>Interne</string>
               </property>
              </widget>
             </item>
@@ -565,7 +568,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Sphere</string>
+              <string>Sphère</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -722,34 +725,15 @@
             <bool>false</bool>
            </property>
            <layout class="QGridLayout" name="gridLayout_5">
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_14">
-              <property name="text">
-               <string>Base :</string>
+            <item row="0" column="0">
+             <widget class="prismSpinBox" name="lPrismValue">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
               </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QRadioButton" name="lInternalRadio">
-              <property name="text">
-               <string>Interne</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QRadioButton" name="lSuperiorRadio">
-              <property name="text">
-               <string>Supérieure</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QRadioButton" name="lInferiorRadio">
-              <property name="text">
-               <string>Inférieure</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
+              <property name="singleStep">
+               <double>0.500000000000000</double>
               </property>
              </widget>
             </item>
@@ -758,17 +742,39 @@
               <property name="text">
                <string>Externe</string>
               </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="dotSpinBox" name="lPrismValue">
-              <property name="font">
-               <font>
-                <pointsize>16</pointsize>
-               </font>
+            <item row="2" column="0">
+             <widget class="QRadioButton" name="lSuperiorRadio">
+              <property name="text">
+               <string>Supérieure</string>
               </property>
-              <property name="singleStep">
-               <double>0.500000000000000</double>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_14">
+              <property name="text">
+               <string>Base :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QRadioButton" name="lInternalRadio">
+              <property name="text">
+               <string>Interne</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QRadioButton" name="lInferiorRadio">
+              <property name="text">
+               <string>Inférieure</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -924,6 +930,11 @@
    <extends>QSpinBox</extends>
    <header>anglespinbox.h</header>
   </customwidget>
+  <customwidget>
+   <class>prismSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>prismspinbox.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>nameEdit</tabstop>
@@ -954,16 +965,8 @@
   <tabstop>lAddSpin</tabstop>
   <tabstop>rPrismGroup</tabstop>
   <tabstop>rPrismValue</tabstop>
-  <tabstop>rInferiorRadio</tabstop>
-  <tabstop>rSuperiorRadio</tabstop>
-  <tabstop>rExternalRadio</tabstop>
-  <tabstop>rInternalRadio</tabstop>
   <tabstop>lPrismGroup</tabstop>
   <tabstop>lPrismValue</tabstop>
-  <tabstop>lInferiorRadio</tabstop>
-  <tabstop>lExternalRadio</tabstop>
-  <tabstop>lSuperiorRadio</tabstop>
-  <tabstop>lInternalRadio</tabstop>
   <tabstop>visualAcuityGroup</tabstop>
   <tabstop>rVASpin</tabstop>
   <tabstop>lVASpin</tabstop>

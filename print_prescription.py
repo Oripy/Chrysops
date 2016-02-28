@@ -28,7 +28,7 @@ class MainWindow(QtGui.QMainWindow):
             port = u"permanent"
         
         if values[5] == 2:
-            verres = u"Bifocaux"
+            verres = u"Verres bifocaux"
         elif values[5] == 1:
             verres = u"Foyers progressifs"
         else:
@@ -37,18 +37,18 @@ class MainWindow(QtGui.QMainWindow):
         if values[6] == 5:
             teinte = u"Verres teintés (Photochromiques)"
         elif values[6] == 1:
-            teinte = u"Verres teintés T1"
+            teinte = u"Verres teintés T1, polarisés"
         elif values[6] == 2:
-            teinte = u"Verres teintés T2"
+            teinte = u"Verres teintés T2, polarisés"
         elif values[6] == 3:
-            teinte = u"Verres teintés T3"
+            teinte = u"Verres teintés T3, polarisés"
         elif values[6] == 4:
-            teinte = u"Verres teintés T4"
+            teinte = u"Verres teintés T4, polarisés"
         else:
             teinte = u"Verres non teintés"
             
         if values[12] != 0:
-            odprisme = "prisme : %+0.2f" % values[12]
+            odprisme = "prisme intégré %0.2f Δ sur Œil Droit" % values[12]
             if values[13] == 0:
                 odprisme += u" base inférieure<br />"
             elif values[13] == 1:
@@ -61,7 +61,7 @@ class MainWindow(QtGui.QMainWindow):
             odprisme = u""
             
         if values[18] != 0:
-            ogprisme = "prisme : %+0.2f" % values[18]
+            ogprisme = "prisme intégré %0.2f Δ sur Œil Gauche" % values[18]
             if values[19] == 0:
                 ogprisme += u" base inférieure<br />"
             elif values[19] == 1:
