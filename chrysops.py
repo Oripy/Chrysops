@@ -5,9 +5,11 @@ Created on Sun Feb 02 2014
 @author: pmaurier
 """
 
+#from PyQt4 import QtCore, QtGui
+#from chrysopsUI import Ui_MainWindow 
+
 from PyQt4 import QtCore, QtGui, uic
 Ui_MainWindow = uic.loadUiType("chrysops.ui")[0]
-#from chrysopsUI import Ui_MainWindow 
 
 import print_prescription
 import database
@@ -356,12 +358,12 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     tint = property(getTint, setTint)
 
-    def setRBase(self, value=0):
+    def setRBase(self, value=3):
         """ Change right base radio selection according to given value
-        0 (default): Inferior
+        0: Inferior
         1: Superior
         2: External
-        3: Internal """
+        3 (default): Internal """
         if value == 1:
             self.rSuperiorRadio.setChecked(True)
         elif value == 2:
@@ -373,10 +375,10 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
     def getRBase(self):
         """ Retruns right base radio selection
-        0 (default): Inferior
+        0: Inferior
         1: Superior
         2: External
-        3: Internal """
+        3 (default): Internal """
         if self.rInferiorRadio.isChecked():
             return 0
         elif self.rSuperiorRadio.isChecked():
@@ -388,12 +390,12 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     
     rBase = property(getRBase, setRBase)
 
-    def setLBase(self, value=0):
+    def setLBase(self, value=3):
         """ Change left base radio selection according to given value
-        0 (default): Inferior
+        0: Inferior
         1: Superior
         2: External
-        3: Internal """
+        3 (default): Internal """
         if value == 1:
             self.lSuperiorRadio.setChecked(True)
         elif value == 2:
@@ -405,10 +407,10 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             
     def getLBase(self):
         """ Retruns left base radio selection
-        0 (default): Inferior
+        0: Inferior
         1: Superior
         2: External
-        3: Internal """
+        3 (default): Internal """
         if self.lInferiorRadio.isChecked():
             return 0
         elif self.lSuperiorRadio.isChecked():
@@ -492,14 +494,14 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         """ values if prism group is unchecked """
         if not self.rPrismGroup.isChecked():
             self.rPrismValue.setValue(0)
+            self.rInternalRadio.setChecked(True)
         else:
             self.rPrismValue.setValue(1)
-            self.rExternalRadio.setChecked(True)
         if not self.lPrismGroup.isChecked():
             self.lPrismValue.setValue(0)
+            self.lInternalRadio.setChecked(True)
         else:
             self.lPrismValue.setValue(1)
-            self.lExternalRadio.setChecked(True)
     
     def visualAcuityGroupChanged(self):
         """ Reset values if visual acuity group is unchecked """

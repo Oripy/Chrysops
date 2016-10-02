@@ -473,7 +473,7 @@
                <string>Externe</string>
               </property>
               <property name="checked">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -517,6 +517,9 @@
              <widget class="QRadioButton" name="rInternalRadio">
               <property name="text">
                <string>Interne</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -743,7 +746,7 @@
                <string>Externe</string>
               </property>
               <property name="checked">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -763,8 +766,14 @@
             </item>
             <item row="3" column="0">
              <widget class="QRadioButton" name="lInternalRadio">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Interne</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>

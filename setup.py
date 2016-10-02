@@ -48,7 +48,7 @@ setup(windows=[
 data_files = [
             'config.ini',
             'template.htm',
-            ('sqldrivers', ('C:\Python27\Lib\site-packages\PyQt4\plugins\sqldrivers\qsqlite4.dll',)),
+            ('sqldrivers', ('C:\Users\MPA1DY2\Documents\WinPython-32bit-2.7.6.4\python-2.7.6\Lib\site-packages\PyQt4\plugins\sqldrivers\qsqlite4.dll',)),
 #            ('phonon_backend', [
 #                'C:\Python27\Lib\site-packages\PyQt4\plugins\phonon_backend\phonon_ds94.dll'
 #                ]),
