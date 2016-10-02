@@ -57,7 +57,12 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.progressiveGlassesRadio.toggled.connect(self.glassesGroupChanged)
         self.bifocalGlassesRadio.toggled.connect(self.glassesGroupChanged)
         
-        self.tintGroupBox.toggled.connect(self.tintGroupBoxChanged)        
+        # self.tintGroupBox.toggled.connect()
+
+        self.T1Radio.toggled.connect(self.tintGroupBoxChanged)
+        self.T2Radio.toggled.connect(self.tintGroupBoxChanged)
+        self.T3Radio.toggled.connect(self.tintGroupBoxChanged)
+        self.T4Radio.toggled.connect(self.tintGroupBoxChanged)
         
         self.antiglareCheckBox.setChecked(True)
         
@@ -472,9 +477,10 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     
     def tintGroupBoxChanged(self):
         if self.tintGroupBox.isChecked():
-            self.antiglareCheckBox.setChecked(False)
-        else:
-            self.antiglareCheckBox.setChecked(True)
+            if not self.photochromicRadio.isChecked():
+                self.antiglareCheckBox.setChecked(False)
+            else:
+                self.antiglareCheckBox.setChecked(True)
     
     def additionChanged(self):
         """ Change the other addition value if link is checked """
