@@ -18,7 +18,7 @@ DATA_STRUCTURE = [
     ["port", "TINYINT", 0],                             #4
     ["verres", "TINYINT", 0],                           #5
     ["teinte", "TINYINT", 0],                           #6
-    ["reflets", "BOOLEAN", True],                      #7
+    ["reflets", "BOOLEAN", True],                       #7
     ["OD_sphere", "REAL", 0],                           #8
     ["OD_cylindre", "REAL", 0],                         #9
     ["OD_axe", "REAL", 180],                            #10
@@ -37,9 +37,10 @@ DATA_STRUCTURE = [
     ["REM_amblyopie_value", "TINYINT", 0],              #23
     ["REM_amblyopie_OD", "BOOLEAN", False],             #24
     ["REM_amblyopie_OG", "BOOLEAN", False],             #25
-    ["remarques", "TEXT", ""],                           #26
+    ["remarques", "TEXT", ""],                          #26
     ["distance_vision", "BOOLEAN", True],               #27
-    ["near_vision", "BOOLEAN", True]                    #28
+    ["near_vision", "BOOLEAN", True],                   #28
+    ["bleue", "BOOLEAN", True]                          #29
     ]
 
 class MainWindow(QtGui.QMainWindow):
@@ -47,11 +48,11 @@ class MainWindow(QtGui.QMainWindow):
     resultSelected = QtCore.pyqtSignal(list)
     def __init__(self):
         super(MainWindow, self).__init__()
-        
+
         self.setWindowTitle("Recherche")
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setWindowState(QtCore.Qt.WindowMaximized)
-        
+
         self.table = QtGui.QTableView()
         self.table.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.table.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
@@ -66,28 +67,28 @@ class MainWindow(QtGui.QMainWindow):
 
         toolbar.addWidget(QtGui.QLabel(" Nom : "))
         self.searchNameEdit = QtGui.QLineEdit()
-        self.searchNameEdit.setSizePolicy(QtGui.QSizePolicy.Fixed, 
+        self.searchNameEdit.setSizePolicy(QtGui.QSizePolicy.Fixed,
                                           QtGui.QSizePolicy.Fixed)
         toolbar.addWidget(self.searchNameEdit)
 
         toolbar.addWidget(QtGui.QLabel(u" Prénom : "))
         self.searchSurnameEdit = QtGui.QLineEdit()
-        self.searchSurnameEdit.setSizePolicy(QtGui.QSizePolicy.Fixed, 
+        self.searchSurnameEdit.setSizePolicy(QtGui.QSizePolicy.Fixed,
                                              QtGui.QSizePolicy.Fixed)
         toolbar.addWidget(self.searchSurnameEdit)
-        
+
         toolbar.addWidget(QtGui.QLabel(u" Date : "))
         self.searchDateEdit = QtGui.QDateEdit()
         toolbar.addWidget(self.searchDateEdit)
         self.searchDateEdit.setDate(date.today())
         self.searchDateEdit.setEnabled(False)
-        
+
         self.dateCheckbox = QtGui.QCheckBox('')
         toolbar.addWidget(self.dateCheckbox)
-        
+
         toolbar.addSeparator()
         deleteAction = toolbar.addAction(u"Supprimer")
-        
+
         self.searchNameEdit.textChanged.connect(self.filterTable)
         self.searchSurnameEdit.textChanged.connect(self.filterTable)
         self.searchDateEdit.dateChanged.connect(self.filterTable)
@@ -108,6 +109,11 @@ class MainWindow(QtGui.QMainWindow):
         query_text =  query_text[:-2 ]+ ")"
         query.exec_(query_text)
 
+        try:
+            query.exec_("ALTER TABLE ordonnances ADD COLUMN bleue;")
+        except:
+            pass
+
         self.model = QtSql.QSqlTableModel()
         self.model.setTable("ordonnances")
         self.model.sort(2, QtCore.Qt.AscendingOrder)
@@ -118,25 +124,25 @@ class MainWindow(QtGui.QMainWindow):
 
     def addNewLine(self, data):
         """ Insert a new row into the database """
-        self.model.insertRows(0, 1) 
-        
+        self.model.insertRows(0, 1)
+
         # Enter values
         for num, elem in enumerate(data):
-            self.model.setData(self.model.index(0, num), elem)    
-        
+            self.model.setData(self.model.index(0, num), elem)
+
         # Add data to the model
         self.model.submitAll()
 
     def filterTable(self):
-        """ Filter elements displayed according to edit fields """      
+        """ Filter elements displayed according to edit fields """
         query_text = ('nom LIKE "'+self.searchNameEdit.text()+'%" AND '
                       'prenom LIKE "'+self.searchSurnameEdit.text()+'%"')
-                      
+
         # Add the date filter if dateCheckbox is checked
         if self.dateCheckbox.isChecked():
             query_text += ('AND date = "'+
                         self.searchDateEdit.date().toString('yyyy-MM-dd')+'"')
-        
+
         # Apply the filter and sort the view
         self.model.setFilter(query_text)
         self.model.sort(2, QtCore.Qt.AscendingOrder)
@@ -145,7 +151,7 @@ class MainWindow(QtGui.QMainWindow):
         """ Enable or disable date edit field according to checkbox state """
         self.searchDateEdit.setEnabled(self.dateCheckbox.isChecked())
         self.filterTable()
-    
+
     def deleteSelectedRow(self):
         """ Remove selected row after a user warning"""
         if len(self.table.selectionModel().selectedRows())>0:
@@ -156,14 +162,14 @@ class MainWindow(QtGui.QMainWindow):
                 QtGui.QMessageBox.No)
             if question == QtGui.QMessageBox.Yes:
                 self.model.removeRow(
-                        self.table.selectionModel().selectedRows()[0].row()) 
+                        self.table.selectionModel().selectedRows()[0].row())
                 self.model.submitAll()
 
     def returnRow(self):
         """ Return the row selected and hide the search window """
         self.hide()
         if (not self.signalsBlocked()):
-            self.resultSelected.emit([item.data().toString() for item 
+            self.resultSelected.emit([item.data().toString() for item
                 in self.table.selectionModel().selectedIndexes()])
 
 if __name__ == '__main__':

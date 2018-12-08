@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>914</width>
-    <height>789</height>
+    <height>866</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -850,6 +850,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="blueLightCheckBox">
+          <property name="text">
+           <string>Traitement pour lumière bleue nocive</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -945,6 +952,7 @@
  <tabstops>
   <tabstop>nameEdit</tabstop>
   <tabstop>surnameEdit</tabstop>
+  <tabstop>CMUCheckBox</tabstop>
   <tabstop>dateEdit</tabstop>
   <tabstop>permUseRadio</tabstop>
   <tabstop>itermUseRadio</tabstop>
@@ -959,6 +967,7 @@
   <tabstop>T3Radio</tabstop>
   <tabstop>T4Radio</tabstop>
   <tabstop>antiglareCheckBox</tabstop>
+  <tabstop>blueLightCheckBox</tabstop>
   <tabstop>distanceVisionCheckbox</tabstop>
   <tabstop>nearVisionCheckbox</tabstop>
   <tabstop>rSphereSpin</tabstop>
@@ -985,11 +994,18 @@
   <tabstop>printButton</tabstop>
   <tabstop>clearButton</tabstop>
   <tabstop>searchButton</tabstop>
-  <tabstop>CMUCheckBox</tabstop>
   <tabstop>r90Button</tabstop>
   <tabstop>rFineCheckbox</tabstop>
   <tabstop>l90Button</tabstop>
   <tabstop>lFineCheckbox</tabstop>
+  <tabstop>rExternalRadio</tabstop>
+  <tabstop>rSuperiorRadio</tabstop>
+  <tabstop>rInferiorRadio</tabstop>
+  <tabstop>rInternalRadio</tabstop>
+  <tabstop>lExternalRadio</tabstop>
+  <tabstop>lSuperiorRadio</tabstop>
+  <tabstop>lInferiorRadio</tabstop>
+  <tabstop>lInternalRadio</tabstop>
  </tabstops>
  <resources/>
  <connections/>

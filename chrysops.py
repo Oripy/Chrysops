@@ -6,7 +6,7 @@ Created on Sun Feb 02 2014
 """
 
 #from PyQt4 import QtCore, QtGui
-#from chrysopsUI import Ui_MainWindow 
+#from chrysopsUI import Ui_MainWindow
 
 from PyQt4 import QtCore, QtGui, uic
 Ui_MainWindow = uic.loadUiType("chrysops.ui")[0]
@@ -24,7 +24,7 @@ from config import (MAX_SPHERE, MIN_SPHERE, STEP_SPHERE, DEFAULT_SPHERE,
                     MAX_ADD, MIN_ADD, STEP_ADD, DEFAULT_ADD)
 
 def str2bool(value):
-    """ Convert a string value to boolean 
+    """ Convert a string value to boolean
         True is returned for (case insensitive):
             yes
             true
@@ -37,70 +37,70 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         super(Ui_MainWindow, self).__init__()
-        
-        self.search_window = database.MainWindow()        
-        
+
+        self.search_window = database.MainWindow()
+
         self.search_window.resultSelected.connect(self.loadValues)
-        
+
         self.setupUi(self)
         self.initUI()
-        
+
     def initUI(self):
-        
+
         """ create actions and default values of the interface """
         self.dateEdit.setDate(QtCore.QDate.currentDate())
         self.printButton.clicked.connect(self.printAction)
         self.searchButton.clicked.connect(self.searchAction)
-        self.clearButton.clicked.connect(self.clearAction)  
-    
+        self.clearButton.clicked.connect(self.clearAction)
+
         self.normalGlassesRadio.toggled.connect(self.glassesGroupChanged)
         self.progressiveGlassesRadio.toggled.connect(self.glassesGroupChanged)
         self.bifocalGlassesRadio.toggled.connect(self.glassesGroupChanged)
-        
+
         # self.tintGroupBox.toggled.connect()
 
         self.T1Radio.toggled.connect(self.tintGroupBoxChanged)
         self.T2Radio.toggled.connect(self.tintGroupBoxChanged)
         self.T3Radio.toggled.connect(self.tintGroupBoxChanged)
         self.T4Radio.toggled.connect(self.tintGroupBoxChanged)
-        
+
         self.antiglareCheckBox.setChecked(True)
-        
-        # Right Eye     
+
+        # Right Eye
         # Correction
         self.rSphereSpin.setMaximum(MAX_SPHERE)
         self.rSphereSpin.setMinimum(MIN_SPHERE)
         self.rSphereSpin.setSingleStep(STEP_SPHERE)
         self.rSphereSpin.setValue(DEFAULT_SPHERE)
         self.rSphereSpin.valueChanged.connect(self.modified)
-        
+
         self.rCylSpin.setMaximum(MAX_CYL)
         self.rCylSpin.setMinimum(MIN_CYL)
         self.rCylSpin.setSingleStep(STEP_CYL)
         self.rCylSpin.setValue(DEFAULT_CYL)
         self.rCylSpin.valueChanged.connect(self.modified)
-        
+
         self.rLabelCylPos.setVisible(False)
-        
+
         self.rAxisSpin.setMaximum(MAX_AXIS)
         self.rAxisSpin.setMinimum(MIN_AXIS)
         self.rAxisSpin.setSingleStep(STEP_AXIS)
         self.rAxisSpin.setValue(DEFAULT_AXIS)
         self.rAxisSpin.valueChanged.connect(self.modified)
-        
+
         self.r90Button.clicked.connect(self.r90Action)
         self.rFineCheckbox.stateChanged.connect(self.rFineChanged)
-        
+
         self.rAddSpin.setMaximum(MAX_ADD)
         self.rAddSpin.setMinimum(MIN_ADD)
         self.rAddSpin.setSingleStep(STEP_ADD)
         self.rAddSpin.setValue(DEFAULT_ADD)
         self.rAddSpin.valueChanged.connect(self.additionChanged)
-        
+
         self.rLinkCheckbox.stateChanged.connect(self.linkChanged)
         self.rPrismGroup.toggled.connect(self.prismGroupChanged)
         self.rPrismValue.setSingleStep(0.25)
-        
+
         # Left Eye
         # Correction
         self.lSphereSpin.setMaximum(MAX_SPHERE)
@@ -108,40 +108,40 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.lSphereSpin.setSingleStep(STEP_SPHERE)
         self.lSphereSpin.setValue(DEFAULT_SPHERE)
         self.lSphereSpin.valueChanged.connect(self.modified)
-        
+
         self.lCylSpin.setMaximum(MAX_CYL)
         self.lCylSpin.setMinimum(MIN_CYL)
         self.lCylSpin.setSingleStep(STEP_CYL)
         self.lCylSpin.setValue(DEFAULT_CYL)
         self.lCylSpin.valueChanged.connect(self.modified)
-        
+
         self.lLabelCylPos.setVisible(False)
-        
+
         self.lAxisSpin.setMaximum(MAX_AXIS)
         self.lAxisSpin.setMinimum(MIN_AXIS)
         self.lAxisSpin.setSingleStep(STEP_AXIS)
         self.lAxisSpin.setValue(DEFAULT_AXIS)
         self.lAxisSpin.valueChanged.connect(self.modified)
-        
+
         self.l90Button.clicked.connect(self.l90Action)
         self.lFineCheckbox.stateChanged.connect(self.lFineChanged)
-        
+
         self.lAddSpin.setMaximum(MAX_ADD)
         self.lAddSpin.setMinimum(MIN_ADD)
         self.lAddSpin.setSingleStep(STEP_ADD)
         self.lAddSpin.setValue(DEFAULT_ADD)
         self.lAddSpin.valueChanged.connect(self.additionChanged)
-        
+
         self.lLinkCheckbox.stateChanged.connect(self.linkChanged)
         self.lPrismGroup.toggled.connect(self.prismGroupChanged)
         self.lPrismValue.setSingleStep(0.25)
-        
+
         self.visualAcuityGroup.toggled.connect(self.visualAcuityGroupChanged)
-        self.amblyopiaGroup.toggled.connect(self.amblyopiaGroupChanged)        
-        
+        self.amblyopiaGroup.toggled.connect(self.amblyopiaGroupChanged)
+
         self.rLinkCheckbox.setChecked(True)
         self.glassesGroupChanged()
-        
+
         self.modified()
 
     def printAction(self):
@@ -155,18 +155,18 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 QtGui.QMessageBox.Ok)
         else:
             self.print_window = print_prescription.MainWindow(values=self.data)
-            
+
             # Save data if the signal says that the page have been printed
             self.print_window.pagePrinted.connect(self.saveAction)
-    
+
     def searchAction(self):
         """ Show the search window """
         self.search_window.show()
-    
+
     def saveAction(self):
         """ Add a new line to the database with data from the current form """
         self.search_window.addNewLine(self.data)
-    
+
     def clearAction(self):
         """ Reset the form """
         self.data = [item[2] for item in database.DATA_STRUCTURE]
@@ -203,7 +203,8 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.amblyopiaLeftEye.isChecked(),
                 self.remarksEdit.toPlainText(),
                 self.distanceVisionCheckbox.isChecked(),
-                self.nearVisionCheckbox.isChecked()
+                self.nearVisionCheckbox.isChecked(),
+                self.blueLightCheckBox.isChecked()
                 ]
 
     def loadValues(self, data):
@@ -217,7 +218,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.glasses = int(data[5])
         self.tint = int(data[6])
         self.antiglareCheckBox.setChecked(str2bool(data[7]))
-        
+
         self.rSphereSpin.setValue(float(data[8]))
         self.rCylSpin.setValue(float(data[9]))
         if int(data[10]) % 5 != 0:
@@ -229,7 +230,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.rPrismGroup.setChecked(float(data[12]) != 0)
         self.rPrismValue.setValue(float(data[12]))
         self.rBase = int(data[13])
-        
+
         self.lSphereSpin.setValue(float(data[14]))
         self.lCylSpin.setValue(float(data[15]))
         if int(data[16]) % 5 != 0:
@@ -241,28 +242,31 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.lPrismGroup.setChecked(float(data[18]) != 0)
         self.lPrismValue.setValue(float(data[18]))
         self.lBase = int(data[19])
-        
+
         if float(data[11]) == float(data[17]):
             self.rLinkCheckbox.setChecked(True)
-        
+
         self.visualAcuityGroup.setChecked(str2bool(data[20]))
         self.rVASpin.setValue(int(data[21]))
         self.lVASpin.setValue(int(data[22]))
-        
+
         self.amblyopia = int(data[23])
         self.amblyopiaRightEye.setChecked(str2bool(data[24]))
         self.amblyopiaLeftEye.setChecked(str2bool(data[25]))
-        
+
         self.remarksEdit.setText(data[26])
-        
+
         self.distanceVisionCheckbox.setChecked(str2bool(data[27]))
         self.nearVisionCheckbox.setChecked(str2bool(data[28]))
-        
+
+        if (len(data) > 29):
+            self.blueLightCheckBox.setChecked(str2bool(data[29]))
+
         self.glassesGroupChanged()
         self.visualAcuityGroupChanged()
         self.amblyopiaGroupChanged()
         self.prismGroupChanged()
-    
+
     data = property(getData, loadValues)
 
     def setUse(self, value=0):
@@ -276,7 +280,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.bothUseRadio.setChecked(True)
         else:
             self.permUseRadio.setChecked(True)
-    
+
     def getUse(self):
         """ Returns glasses usage radio selection
         0 (default): permanent usage
@@ -302,7 +306,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.bifocalGlassesRadio.setChecked(True)
         else:
             self.normalGlassesRadio.setChecked(True)
-    
+
     def getGlasses(self):
         """ Returns glasses type radio selection
         0 (default): normal
@@ -314,9 +318,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             return 2
         else:
             return 0
-        
+
     glasses = property(getGlasses, setGlasses)
-            
+
     def setTint(self, value=0):
         """ Change tint radio selection according to given value
         0 (default): no tint
@@ -335,7 +339,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         elif value == 4:
             self.T4Radio.setChecked(True)
         elif value == 5:
-            self.photochromicRadio.setChecked(True) 
+            self.photochromicRadio.setChecked(True)
         else:
             self.photochromicRadio.setChecked(True)
             self.tintGroupBox.setChecked(False)
@@ -377,7 +381,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.rInternalRadio.setChecked(True)
         else:
             self.rInferiorRadio.setChecked(True)
-        
+
     def getRBase(self):
         """ Retruns right base radio selection
         0: Inferior
@@ -392,7 +396,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             return 2
         else:
             return 3
-    
+
     rBase = property(getRBase, setRBase)
 
     def setLBase(self, value=3):
@@ -409,7 +413,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.lInternalRadio.setChecked(True)
         else:
             self.lInferiorRadio.setChecked(True)
-            
+
     def getLBase(self):
         """ Retruns left base radio selection
         0: Inferior
@@ -424,9 +428,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             return 2
         else:
             return 3
-            
+
     lBase = property(getLBase, setLBase)
-            
+
     def setAmblyopia(self, value=0):
         """ Change amblyopia radio selection according to given value
         0 (default): no amblyopia set
@@ -454,7 +458,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             return 1
         elif self.organicRadio.isChecked():
             return 2
-    
+
     amblyopia = property(getAmblyopia, setAmblyopia)
 
     def glassesGroupChanged(self):
@@ -469,19 +473,19 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.nearVisionCheckbox.setChecked(True)
             self.distanceVisionCheckbox.setDisabled(True)
             self.nearVisionCheckbox.setDisabled(True)
-        
+
         self.rAddSpin.setDisabled(self.normalGlassesRadio.isChecked())
         self.lAddSpin.setDisabled(self.normalGlassesRadio.isChecked())
         self.rLinkCheckbox.setDisabled(self.normalGlassesRadio.isChecked())
         self.lLinkCheckbox.setDisabled(self.normalGlassesRadio.isChecked())
-    
+
     def tintGroupBoxChanged(self):
         if self.tintGroupBox.isChecked():
             if not self.photochromicRadio.isChecked():
                 self.antiglareCheckBox.setChecked(False)
             else:
                 self.antiglareCheckBox.setChecked(True)
-    
+
     def additionChanged(self):
         """ Change the other addition value if link is checked """
         if self.rLinkCheckbox.isChecked():
@@ -489,13 +493,13 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.rAddSpin.setValue(value)
             self.lAddSpin.setValue(value)
             self.modified()
-    
+
     def linkChanged(self):
         """ Link the state of the two checkboxes """
         state = self.sender().isChecked()
         self.lLinkCheckbox.setChecked(state)
         self.rLinkCheckbox.setChecked(state)
-    
+
     def prismGroupChanged(self):
         """ values if prism group is unchecked """
         if not self.rPrismGroup.isChecked():
@@ -508,26 +512,26 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.lInternalRadio.setChecked(True)
         else:
             self.lPrismValue.setValue(1)
-    
+
     def visualAcuityGroupChanged(self):
         """ Reset values if visual acuity group is unchecked """
         if not self.visualAcuityGroup.isChecked():
             self.rVASpin.setValue(0)
             self.lVASpin.setValue(0)
-    
+
     def amblyopiaGroupChanged(self):
         """ Reset radio selection if amblyopia group is unchecked """
         if not self.amblyopiaGroup.isChecked():
             self.functionnalRadio.setChecked(True)
             self.amblyopiaRightEye.setChecked(False)
             self.amblyopiaLeftEye.setChecked(False)
-            
+
     def r90Action(self):
         self.rAxisSpin.setValue(90)
-    
+
     def l90Action(self):
         self.lAxisSpin.setValue(90)
-        
+
     def rFineChanged(self):
         if self.rFineCheckbox.isChecked():
             self.rAxisSpin.setSingleStep(1)
@@ -545,7 +549,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.lAxisSpin.setMinimum(MIN_AXIS)
             self.lAxisSpin.setSingleStep(5)
             self.lAxisSpin.setValue(self.lAxisSpin.value()-self.lAxisSpin.value()%5)
-        
+
     def modified(self):
         """ Action when a value is modified """
         if self.rCylSpin.value() == 0:

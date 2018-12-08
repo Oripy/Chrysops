@@ -6,7 +6,7 @@ Created on Fri Feb 7 16:17:00 2014
 """
 
 import sys
-    
+
 from PyQt4 import QtGui, QtWebKit, QtCore
 from string import Template
 
@@ -17,23 +17,23 @@ class MainWindow(QtGui.QMainWindow):
     pagePrinted = QtCore.pyqtSignal()
     def __init__(self, values=[item[2] for item in DATA_STRUCTURE]):
         super(MainWindow, self).__init__()
-        
+
         DEFAULT_ZOOM = .8
-        
+
         if values[4] == 2:
             port = u"intermittent ou permanent"
         elif values[4] == 1:
             port = u"intermittent"
         else:
             port = u"permanent"
-        
+
         if values[5] == 2:
             verres = u"Verres bifocaux"
         elif values[5] == 1:
             verres = u"Foyers progressifs"
         else:
             verres = u"Unifocaux"
-        
+
         if values[6] == 5:
             teinte = u"Verres teintés (Photochromiques)"
         elif values[6] == 1:
@@ -46,7 +46,7 @@ class MainWindow(QtGui.QMainWindow):
             teinte = u"Verres teintés T4, polarisés"
         else:
             teinte = u"Verres non teintés"
-            
+
         if values[12] != 0:
             odprisme = "prisme intégré %0.2f Δ sur Œil Droit" % values[12]
             if values[13] == 0:
@@ -59,7 +59,7 @@ class MainWindow(QtGui.QMainWindow):
                 odprisme += u" base interne<br />"
         else:
             odprisme = u""
-            
+
         if values[18] != 0:
             ogprisme = "prisme intégré %0.2f Δ sur Œil Gauche" % values[18]
             if values[19] == 0:
@@ -72,7 +72,7 @@ class MainWindow(QtGui.QMainWindow):
                 ogprisme += u" base interne<br />"
         else:
             ogprisme = u""
-        
+
         if values[20]:
             avcorrigee = u"Acuité visuelle corrigée en vision de loin :<br />"
             if values[21] != 0:
@@ -83,14 +83,14 @@ class MainWindow(QtGui.QMainWindow):
                                     u'</span><br />') % values[22]
         else:
             avcorrigee = u""
-        
+
         if values[23] == 1:
             amblyopie = u"Amblyopie fonctionnelle "
         elif values[23] == 2:
             amblyopie = u"Amblyopie organique "
         else:
             amblyopie = u""
-        
+
         if values[24] and values[25]:
             amblyopie += u"Œil Droit et Œil Gauche"
         else:
@@ -98,7 +98,7 @@ class MainWindow(QtGui.QMainWindow):
                 amblyopie += u'Œil Droit'
             if values[25]:
                 amblyopie += u'Œil Gauche'
-                
+
         if values[27] and values[28]:
             vision = u"Vision de loin et de près"
         elif values[27]:
@@ -107,13 +107,13 @@ class MainWindow(QtGui.QMainWindow):
             vision = u"Vision de près"
         else:
             vision = u""
-            
-        
+
+
         if avcorrigee != "" or amblyopie != "" or values[26] != "":
             remarque = u"<u>Remarques :</u>"
         else:
             remarque = u""
-        
+
         self.values = dict(datePrescription = values[2].toString('dd/MM/yyyy'),
                     prenom = str(values[1]), nom = str(values[0]),
                     cmu = (u"CMU" if values[3] else ''), port = port,
@@ -132,7 +132,8 @@ class MainWindow(QtGui.QMainWindow):
                     ogprisme = ogprisme,
                     remarque = remarque, amblyopie = amblyopie,
                     avcorrigee = avcorrigee, remarques = values[26],
-                    vision = vision)
+                    vision = vision,
+                    bleue = (u", traitement pour lumière bleue nocive" if values[29] else ''))
 
         # Define the Web view size and behaviour
         self.web = QtWebKit.QWebView()
@@ -150,7 +151,7 @@ class MainWindow(QtGui.QMainWindow):
         scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         scrollArea.setWidget(self.web)
         scrollArea.setAlignment(QtCore.Qt.AlignCenter)
-        
+
         zoomBar = QtGui.QSlider(QtCore.Qt.Horizontal)
         zoomBar.setMinimum(50)
         zoomBar.setMaximum(200)
@@ -169,17 +170,17 @@ class MainWindow(QtGui.QMainWindow):
         pdfAction.triggered.connect(lambda: self.printIt("pdf"))
         cancelAction.triggered.connect(self.close)
         toolbar.addWidget(zoomBar)
-        
+
         # Define the MainWindow Characteristics
         self.setWindowTitle(u'Aperçu avant impression')
         self.setCentralWidget(scrollArea)
         self.addToolBar(toolbar)
-        
+
         maxScreenHeight = QtGui.QDesktopWidget().availableGeometry().height()
         windowHeight = min(maxScreenHeight, int(1500*1.1*DEFAULT_ZOOM))
-        windowWidth = int(1000*1.1*DEFAULT_ZOOM)        
+        windowWidth = int(1000*1.1*DEFAULT_ZOOM)
         self.resize(windowWidth, windowHeight)
-       
+
         self.printer = QtGui.QPrinter()
         self.printer.setPageSize(QtGui.QPrinter.A4)
         self.printer.setPageMargins(0, 0, 0, 0, QtGui.QPrinter.Millimeter)
@@ -190,11 +191,11 @@ class MainWindow(QtGui.QMainWindow):
             with open(inputTemplate) as inputFileHandle:
                 self.page = Template(unicode(inputFileHandle.read(),
                                              encoding='utf-8'))
-        
+
         except IOError:
             sys.stderr.write("Error: Could not open %s\n" % (inputTemplate))
             sys.exit(-1)
-        
+
         self.changeZoom(DEFAULT_ZOOM)
         self.web.setHtml(self.loadValues())
         self.show()
@@ -235,9 +236,10 @@ class MainWindow(QtGui.QMainWindow):
                amblyopie = self.values['amblyopie'],
                avcorrigee = self.values['avcorrigee'],
                remarques = self.values['remarques'].replace("\n", "<br />"),
-               vision = self.values['vision'])
-        return data        
-        
+               vision = self.values['vision'],
+               bleue = self.values['bleue'])
+        return data
+
     def printIt(self, output="printer"):
         """ Print the page to the printer, close the preview window and
             send the signal that the page is printed """
