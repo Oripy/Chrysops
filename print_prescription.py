@@ -249,16 +249,17 @@ class MainWindow(QtGui.QMainWindow):
                            "_"+
                            self.values['datePrescription'].replace("/","-")+
                            ".pdf")
+        else:
+            self.printer = QtGui.QPrinter()
+            if(QtGui.QPrintDialog(self.printer).exec_() == QtGui.QDialog.Accepted):
+                self.printer.setPageSize(QtGui.QPrinter.A4)
+                self.printer.setPageMargins(0, 0, 0, 0, QtGui.QPrinter.Millimeter)
         self.web.setZoomFactor(1)
-        self.printer = QtGui.QPrinter()
-        if(QtGui.QPrintDialog(self.printer).exec_() == QtGui.QDialog.Accepted):
-            self.printer.setPageSize(QtGui.QPrinter.A4)
-            self.printer.setPageMargins(0, 0, 0, 0, QtGui.QPrinter.Millimeter)
-            self.web.print_(self.printer)
-            if (not self.signalsBlocked()):
-                self.pagePrinted.emit()
-            self.close()
-        
+        self.web.print_(self.printer)
+        if (not self.signalsBlocked()):
+            self.pagePrinted.emit()
+        self.close()
+
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     mainWin = MainWindow()
